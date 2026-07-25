@@ -1,11 +1,3 @@
-<div align="center">
-
-<img src="docs/images/aegis_ledger_banner.png" alt="AEGIS-LEDGER Header Banner" width="100%" style="border-radius: 8px; border: 1px solid #E2E8F0;" />
-
-<br/><br/>
-
-<img src="frontend/assets/aegis_logo.svg" alt="AEGIS Logo" width="64" height="64" />
-
 # AEGIS-LEDGER
 
 **AEGIS Vacancy Intelligence Ledger**  
@@ -15,27 +7,25 @@
 [![CyBOK Taxonomy](https://img.shields.io/badge/CyBOK-v1.1-0F5257.svg?style=flat-square)](https://www.cybok.org)
 [![NIST NICE](https://img.shields.io/badge/NIST-NICE%20Framework-0F5257.svg?style=flat-square)](https://www.nist.gov/itl/applied-cybersecurity/nice)
 [![Version](https://img.shields.io/badge/version-v0.4.0-0F5257.svg?style=flat-square)](docs/RELEASE_NOTES.md)
-[![Tests](https://img.shields.io/badge/tests-17%20passed-0F5257.svg?style=flat-square)](#-verification--test-suite)
+[![Tests](https://img.shields.io/badge/tests-17%20passed-0F5257.svg?style=flat-square)](#verification--test-suite)
 [![License](https://img.shields.io/badge/license-MIT-0F5257.svg?style=flat-square)](LICENSE)
-
-</div>
 
 ---
 
-## 🏛️ Executive Summary
+## Executive Summary
 
-**AEGIS-LEDGER** is an enterprise-grade, local-first decision platform designed to evaluate cybersecurity job opportunities against rigorous academic frameworks (**CyBOK v1.1**, **NIST NICE Framework**) and empirical **Recruiter Intelligence**.
+AEGIS-LEDGER is an enterprise-grade, local-first decision platform designed to evaluate cybersecurity job opportunities against rigorous academic frameworks (CyBOK v1.1, NIST NICE Framework) and empirical Recruiter Intelligence.
 
-Unlike commercial application tracking systems (ATS) that collapse candidate fit into generic percentage matchers (e.g., *"78% ATS Match"*), **AEGIS-LEDGER** maintains an **auditable evidence ledger** across 4 un-aggregated evaluation dimensions:
+Unlike commercial application tracking systems (ATS) that collapse candidate fit into generic percentage matchers (e.g., "78% ATS Match"), AEGIS-LEDGER maintains an auditable evidence ledger across 4 un-aggregated evaluation dimensions:
 
-1. **Formal Eligibility (Hard Gates):** EU/NATO nationality restrictions, degree level, experience years, security clearance (*NATO SECRET / SECRET UE*), and language proficiencies.
+1. **Formal Eligibility (Hard Gates):** EU/NATO nationality restrictions, degree level, experience years, security clearance (NATO SECRET / SECRET UE), and language proficiencies.
 2. **Substantive Role Fit:** CyBOK Knowledge Area taxonomy mapping, NIST NICE Framework role alignment, technical domain match ratio, and NATO/EU operational context bonus.
 3. **Strategic Value:** Employer Organization Tier classification (Tier 1 core NATO/EU agencies: NCIA, ENISA, CERT-EU, eu-LISA, Europol, ECCC vs Tier 2/3), brand leverage weight, and long-term ecosystem alignment.
 4. **Practical Value:** Net compensation tier, location preference, and Purchasing Power Parity (PPP) cost-of-living salary multipliers.
 
 ---
 
-## 🌟 Core System Architecture & Modules
+## System Architecture & Modules
 
 ```mermaid
 graph TD
@@ -60,28 +50,28 @@ graph TD
 
 ---
 
-## 🚀 Feature Highlights
+## Feature Highlights
 
 ### 1. Recruiter Intelligence & Certification Roadmap
-- Mapped domain-specific certification roadmaps (*CISSP, CISA, CISM, GCTI, Security+, ISO 27001 LA, CSSLP*) comparing credentials held vs target credentials.
-- Generates quantifiable impact templates focused on scale (log volume `50GB+/day`, endpoint count `500+`), MTTR reduction %, and compliance audit proof.
-- Calculates **Potential Max Score** with actionable step-by-step booster roadmaps.
+- Mapped domain-specific certification roadmaps (CISSP, CISA, CISM, GCTI, Security+, ISO 27001 LA, CSSLP) comparing credentials held vs target credentials.
+- Generates quantifiable impact templates focused on scale (log volume 50GB+/day, endpoint count 500+), MTTR reduction %, and compliance audit proof.
+- Calculates Potential Max Score with actionable step-by-step booster roadmaps.
 
 ### 2. CV & Cover Letter Coverage Analyzer
 - Scans raw candidate CV or Cover Letter Markdown text against vacancy required domains, technologies, degree levels, and security clearance requirements.
 - Returns percentage coverage score, matched keyword list, missing keywords to add, and actionable CV recommendations.
 
 ### 3. Purchasing Power Parity (PPP) Calculator
-- Computes real purchasing power net salary equivalents relative to Brussels base (`1.0x`), highlighting cost-of-living advantages (e.g. Athens `1.25x` multiplier).
+- Computes real purchasing power net salary equivalents relative to Brussels base (1.0x), highlighting cost-of-living advantages (e.g. Athens 1.25x multiplier).
 
-### 4. Interactive 4-Axis Score Radar SVG & Minimalist Dashboard
+### 4. Interactive 4-Axis Score Radar & Dashboard
 - Visualizes fit dimensions on a crisp vector radar chart.
-- Includes candidate scenario switching (*Current Profile*, *Post-Thesis Target Profile*, *NATO CIS Specialist*).
-- 100% zero-emoji visual language adhering to a Premium Minimalist gallery aesthetic (`#FAF9F6` warm paper, `#0F5257` deep teal, monospaced numeric scores).
+- Includes candidate scenario switching (Current Profile, Post-Thesis Target Profile, NATO CIS Specialist).
+- Minimalist visual language adhering to a gallery aesthetic (warm paper canvas, deep teal accents, monospaced numeric scores).
 
 ---
 
-## 💻 Installation & Quick Start
+## Installation & Quick Start
 
 ```bash
 # Clone repository
@@ -118,7 +108,7 @@ cyber-vacancy-tracker export-html --id VAC-001 --out report.html
 
 ---
 
-## 🧪 Verification & Test Suite
+## Verification & Test Suite
 
 Run the full pytest unit test suite:
 ```bash
@@ -128,14 +118,12 @@ python3 -m pytest
 
 ---
 
-## 📚 Documentation & Specifications
+## Documentation & Specifications
 
 - [`docs/BRAND_STYLE_GUIDE.md`](docs/BRAND_STYLE_GUIDE.md) - Design System, Color Tokens & Logo Specifications
 - [`docs/RECRUITER_INTELLIGENCE.md`](docs/RECRUITER_INTELLIGENCE.md) - Recruiter Evaluation Logic & Certification Roadmaps
-- [`docs/RELEASE_NOTES.md`](docs/RELEASE_NOTES.md) - Release History & Version Changelog (`v0.4.0`)
+- [`docs/RELEASE_NOTES.md`](docs/RELEASE_NOTES.md) - Release History & Version Changelog (v0.4.0)
 
 ---
 
-<div align="center">
-  <sub>AEGIS-LEDGER &bull; Personal Confidential Career Evidence &bull; Academic & Recruiter Grounded</sub>
-</div>
+*AEGIS-LEDGER &bull; Personal Confidential Career Evidence &bull; Academic & Recruiter Grounded*
