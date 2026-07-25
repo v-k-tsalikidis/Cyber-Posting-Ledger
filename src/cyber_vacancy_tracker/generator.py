@@ -1,5 +1,5 @@
 """
-Application Alignment Brief Generator for Cyber Vacancy Intelligence Tracker.
+Application Alignment Brief Generator for AEGIS-LEDGER.
 Generates tailored cover letter & CV briefs based on multi-dimensional fit analysis and recruiter advisor insights.
 """
 
@@ -82,7 +82,7 @@ def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile
 
 
 def format_brief_markdown(brief: ApplicationBrief) -> str:
-    """Formats an ApplicationBrief into a clean Markdown document."""
+    """Formats an ApplicationBrief into a clean Markdown document (Zero Emojis)."""
     lines = [
         f"# Application Alignment Brief: {brief.vacancy_title}",
         f"**Organization:** {brief.organization}  |  **Vacancy ID:** `{brief.vacancy_id}`",
@@ -108,12 +108,12 @@ def format_brief_markdown(brief: ApplicationBrief) -> str:
     if brief.recruiter_advice:
         rec = brief.recruiter_advice
         lines.extend([
-            "## 🏆 Recruiter Intelligence & Career Path Roadmap",
+            "## Recruiter Intelligence & Career Path Roadmap",
             f"**Domain Focus:** {rec.certification_roadmap.domain_category}  |  **Potential Max Score:** `{rec.potential_max_score}/100`",
             "",
             "### Must-Have & Recommended Certifications",
             "\n".join([
-                f"- {'[HELD ✓]' if c.held else '[TARGET 🎯]'} **{c.name} ({c.code})** - *{c.priority}*"
+                f"- {'[HELD]' if c.held else '[TARGET]'} **{c.name} ({c.code})** - *{c.priority}*"
                 for c in rec.certification_roadmap.target_certifications
             ]),
             "",
@@ -133,6 +133,6 @@ def format_brief_markdown(brief: ApplicationBrief) -> str:
 
     lines.extend([
         "---",
-        "*Cyber Vacancy Intelligence Tracker &bull; Confidential Personal Career Evidence*",
+        "*AEGIS-LEDGER &bull; Confidential Personal Career Intelligence*",
     ])
     return "\n".join(lines)

@@ -1,5 +1,5 @@
 """
-Command Line Interface (CLI) & Web Server for Cyber Vacancy Intelligence Tracker.
+Command Line Interface (CLI) & Web Server for AEGIS-LEDGER (Cyber Vacancy Intelligence Tracker).
 """
 
 import sys
@@ -31,9 +31,9 @@ from cyber_vacancy_tracker.exporter import generate_html_report
 
 
 @click.group()
-@click.version_option(version=__version__, prog_name="cyber-vacancy-tracker")
+@click.version_option(version=__version__, prog_name="aegis-ledger")
 def cli():
-    """Cyber Vacancy Intelligence Tracker CLI - Local-first cybersecurity vacancy assessment engine."""
+    """AEGIS-LEDGER CLI - Academic & Recruiter-Grounded Cybersecurity Career Intelligence Engine."""
     pass
 
 
@@ -47,7 +47,7 @@ def list_vacancies():
         click.echo("No vacancies currently tracked.")
         return
 
-    click.echo("\nTracked Vacancies:")
+    click.echo("\nAEGIS-LEDGER Tracked Vacancies:")
     click.echo("=" * 95)
     click.echo(
         f"{'ID':<10} {'ORGANIZATION':<15} {'TITLE':<30} {'STATUS':<14} {'ELIG':<6} {'FIT':<6} {'STRAT':<6} {'PRACT':<6}"
@@ -79,7 +79,7 @@ def score_vacancy(record_id: str):
     res = evaluate_vacancy(record, profile)
 
     click.echo(f"\n========================================================")
-    click.echo(f" VACANCY FIT ASSESSMENT: {record.id} - {record.title}")
+    click.echo(f" AEGIS-LEDGER FIT ASSESSMENT: {record.id} - {record.title}")
     click.echo(f" Candidate: {profile.candidate_name} ({', '.join(profile.nationalities)})")
     click.echo(f" Organization: {record.organization} ({record.grade_or_level})")
     click.echo(f"========================================================")
@@ -175,7 +175,7 @@ def export_html_cmd(record_id: str, out_file: str):
 @cli.command("serve")
 @click.option("--port", default=8000, help="Port to run local web server on")
 def serve_dashboard(port: int):
-    """Serve local web dashboard UI with profile manager & vacancy calculator."""
+    """Serve AEGIS-LEDGER Dashboard UI."""
     frontend_dir = Path(__file__).parent.parent.parent / "frontend"
     if not frontend_dir.exists():
         click.echo("Error: Frontend directory not found.", err=True)
@@ -271,7 +271,7 @@ def serve_dashboard(port: int):
             self.end_headers()
             self.wfile.write(json.dumps(data, default=str).encode("utf-8"))
 
-    click.echo(f"Serving Vacancy Intelligence Ledger Dashboard at http://localhost:{port} ...")
+    click.echo(f"Serving AEGIS-LEDGER Dashboard at http://localhost:{port} ...")
     try:
         with socketserver.TCPServer(("", port), DashboardHandler) as httpd:
             httpd.serve_forever()

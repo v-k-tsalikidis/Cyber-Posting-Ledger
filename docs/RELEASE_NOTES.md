@@ -1,6 +1,20 @@
-# Release Notes & Version History - Cyber Vacancy Intelligence Tracker
+# Release Notes & Version History - AEGIS-LEDGER
 
-This document maintains the version history, feature additions, and release documentation for **Cyber Vacancy Intelligence Tracker** (**Vacancy Intelligence Ledger**).
+This document maintains the version history, feature additions, and release documentation for **AEGIS-LEDGER** (*AEGIS Vacancy Intelligence Ledger*).
+
+---
+
+## [v0.4.0] - 2026-07-25 (AEGIS-LEDGER Rebrand & Premium Minimalist Overhaul)
+
+### Added & Refactored
+- **Official Rebrand to AEGIS-LEDGER:**
+  - Renamed platform identity to **AEGIS-LEDGER** (*Academic & Recruiter-Grounded Cybersecurity Career Intelligence*).
+- **Brand Style Guide & Vector Logo:**
+  - Added [`docs/BRAND_STYLE_GUIDE.md`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/docs/BRAND_STYLE_GUIDE.md) detailing color tokens, typography rules, SVG logo specs, and zero-emoji guidelines.
+  - Created vector SVG logo mark [`frontend/assets/aegis_logo.svg`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/frontend/assets/aegis_logo.svg).
+- **100% Zero-Emoji UI Cleanup:**
+  - Completely stripped decorative emojis from Web UI, CLI output, Markdown Briefs, and HTML reports.
+  - Applied Warm Off-White paper canvas (`#FAF9F6`), Deep Teal (`#0F5257`), and monospaced numeric scores (`JetBrains Mono`).
 
 ---
 
@@ -9,13 +23,11 @@ This document maintains the version history, feature additions, and release docu
 ### Added
 - **Recruiter Intelligence Advisory Engine (`recruiter_advisor.py`):**
   - Mapped CyBOK categories to industry-recognized certification roadmaps (*CISSP, CISA, CISM, GCTI, Security+, ISO 27001 LA, CSSLP*).
-  - Added status tracking for certifications held vs recommended targets (`Held ✓` vs `Target 🎯`).
+  - Added status tracking for certifications held vs recommended targets (`[HELD]` vs `[TARGET]`).
   - Added **Quantifiable Impact Templates** tailored for recruiter screening (log scale, MTTR %, compliance audit coverage).
   - Added **Score Booster Roadmap** calculating potential max score and step-by-step career path recommendations.
 - **Documentation & Evidence:**
   - Added [`docs/RECRUITER_INTELLIGENCE.md`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/docs/RECRUITER_INTELLIGENCE.md) explaining recruiter filtering logic, metrics, and certification roadmaps.
-- **Unit Tests:**
-  - Added `tests/test_recruiter_advisor.py` (17 total pytest unit tests passing).
 
 ---
 
@@ -24,13 +36,10 @@ This document maintains the version history, feature additions, and release docu
 ### Added
 - **CV & Cover Letter Coverage Analyzer (`analyzer.py`):**
   - Text matching engine scanning raw CV text against vacancy required domains, frameworks, technologies, degree level, and clearance.
-  - Generates coverage percentage, matched terms, and missing keywords list.
 - **Publication-Quality HTML Report Exporter (`exporter.py`):**
   - Generates standalone, styled HTML assessment briefs using the Premium Minimalist design system.
 - **Multi-Profile Scenario Engine:**
   - 1-click UI dropdown to evaluate vacancies under different profile scenarios (*Current*, *Post-Thesis Target*, *NATO Specialist*).
-- **Interactive Web UI Enhancements:**
-  - Added CV Coverage Analyzer Modal, 4-Axis Score Radar SVG generator, and HTML export viewer.
 
 ---
 

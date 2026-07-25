@@ -1,5 +1,5 @@
 /**
- * Vacancy Intelligence Ledger Dashboard, Radar Chart, Brief Generator, CV Analyzer & Recruiter Advisor Logic
+ * AEGIS-LEDGER Dashboard, Radar Chart, Brief Generator, CV Analyzer & Recruiter Advisor Logic
  */
 
 let allVacancies = [];
@@ -137,10 +137,9 @@ function setupListeners() {
       if (res.ok) {
         modalProfile.classList.remove('active');
         await initApp();
-        alert('Το προφίλ σας αποθηκεύτηκε επιτυχώς!');
       }
     } catch (err) {
-      alert('Σφάλμα αποθήκευσης προφίλ: ' + err.message);
+      alert('Error saving profile: ' + err.message);
     }
   });
 
@@ -205,10 +204,9 @@ function setupListeners() {
         modalAdd.classList.remove('active');
         document.getElementById('form-add-vacancy').reset();
         await fetchVacancies();
-        alert('Η νέα θέση προστέθηκε και αξιολογήθηκε επιτυχώς!');
       }
     } catch (err) {
-      alert('Σφάλμα προσθήκης θέσης: ' + err.message);
+      alert('Error adding vacancy: ' + err.message);
     }
   });
 
@@ -239,7 +237,7 @@ function setupListeners() {
   document.getElementById('run-cv-analysis-btn').addEventListener('click', async () => {
     const text = document.getElementById('cv-text-input').value.trim();
     if (!text) {
-      alert('Παρακαλώ επικολλήστε το κείμενο του CV σας.');
+      alert('Please paste CV text before running analysis.');
       return;
     }
 
@@ -253,7 +251,7 @@ function setupListeners() {
       const data = await res.json();
       renderCvResults(data.coverage);
     } catch (err) {
-      alert('Σφάλμα ανάλυσης CV: ' + err.message);
+      alert('CV Analysis error: ' + err.message);
     }
   });
 }
@@ -297,7 +295,7 @@ function render() {
 
   const container = document.getElementById('vacancy-list');
   if (filtered.length === 0) {
-    container.innerHTML = '<div class="panel">Δεν βρέθηκαν θέσεις με τα επιλεγμένα φίλτρα.</div>';
+    container.innerHTML = '<div class="panel">No vacancies match the selected filter criteria.</div>';
     return;
   }
 
@@ -322,9 +320,9 @@ function render() {
           </div>
           <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
             <span class="status-pill ${pillClass}">${status}</span>
-            <button class="btn btn-outline" onclick="openCvAnalyzer('${item.id}', '${escapeHtml(item.title)}')">🔍 CV Match</button>
-            <button class="btn btn-outline" onclick="openBriefModal('${item.id}')">📄 Brief</button>
-            <button class="btn btn-danger" onclick="deleteVacancy('${item.id}')">Διαγραφή</button>
+            <button class="btn btn-outline" onclick="openCvAnalyzer('${item.id}', '${escapeHtml(item.title)}')">CV Match</button>
+            <button class="btn btn-outline" onclick="openBriefModal('${item.id}')">Brief</button>
+            <button class="btn btn-danger" onclick="deleteVacancy('${item.id}')">Delete</button>
           </div>
         </div>
 
@@ -362,9 +360,9 @@ function render() {
         </div>
 
         <div class="card-footer">
-          <span>Τοποθεσία: <strong>${escapeHtml(item.practical?.location || 'N/A')}</strong></span>
-          <span>Πηγή: <strong>${item.provenance?.is_official_source ? 'Official Portal' : 'Aggregator'}</strong></span>
-          <a href="${escapeHtml(item.provenance?.source_url || '#')}" target="_blank" rel="noopener" class="source-link">Προβολή Προκήρυξης (URL) &rarr;</a>
+          <span>Location: <strong>${escapeHtml(item.practical?.location || 'N/A')}</strong></span>
+          <span>Source: <strong>${item.provenance?.is_official_source ? 'Official Portal' : 'Aggregator'}</strong></span>
+          <a href="${escapeHtml(item.provenance?.source_url || '#')}" target="_blank" rel="noopener" class="source-link">View Portal Announcement &rarr;</a>
         </div>
       </div>
     `;
@@ -387,11 +385,11 @@ function renderRadarSVG(res) {
 
   return `
     <svg width="120" height="120" viewBox="0 0 120 120">
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="#FAF9F6" stroke="#E2E8F0" stroke-width="1"/>
       <circle cx="${cx}" cy="${cy}" r="${r * 0.5}" fill="none" stroke="#E2E8F0" stroke-dasharray="2,2"/>
       <line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" stroke="#CBD5E1"/>
       <line x1="${cx - r}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="#CBD5E1"/>
-      <polygon points="${points}" fill="rgba(13, 92, 99, 0.25)" stroke="#0D5C63" stroke-width="2"/>
+      <polygon points="${points}" fill="rgba(15, 82, 87, 0.15)" stroke="#0F5257" stroke-width="1.5"/>
     </svg>
   `;
 }
@@ -408,7 +406,7 @@ async function openBriefModal(id) {
     const rec = brief.recruiter_advice;
     const certsHtml = rec ? rec.certification_roadmap.target_certifications.map(c => `
       <span class="kw-badge ${c.held ? 'kw-matched' : 'kw-missing'}">
-        ${c.held ? '✓ HELD' : '🎯 TARGET'}: ${escapeHtml(c.name)} (${escapeHtml(c.code)}) - ${c.priority}
+        ${c.held ? '[HELD]' : '[TARGET]'}: ${escapeHtml(c.name)} (${escapeHtml(c.code)}) - ${c.priority}
       </span>
     `).join('') : '';
 
@@ -431,11 +429,11 @@ async function openBriefModal(id) {
       </div>
 
       ${rec ? `
-      <div class="brief-section" style="background: #F0FDF4; padding: 16px; border-radius: 8px; border: 1px solid #BBF7D0;">
-        <h3 style="color: #0F766E;">🏆 Recruiter Intelligence &amp; Certification Roadmap</h3>
+      <div class="brief-section" style="background: #E6F4F1; padding: 16px; border-radius: 6px; border: 1px solid #B8E2DA;">
+        <h3 style="color: #0F5257;">Recruiter Intelligence &amp; Certification Roadmap</h3>
         <p style="font-size: 0.85rem; margin-bottom: 8px;">
           <strong>Target Domain:</strong> ${escapeHtml(rec.certification_roadmap.domain_category)} &bull; 
-          <strong>Potential Max Score:</strong> <span style="font-weight:700; color:#0F766E;">${rec.potential_max_score}/100</span>
+          <strong>Potential Max Score:</strong> <span style="font-weight:700; color:#0F5257;">${rec.potential_max_score}/100</span>
         </p>
         <div style="margin-bottom: 12px;">${certsHtml}</div>
         
@@ -469,16 +467,16 @@ async function openBriefModal(id) {
       </div>
     `;
 
-    document.getElementById('brief-modal-title').textContent = `📄 Application Brief: ${brief.vacancy_title} (${brief.organization})`;
+    document.getElementById('brief-modal-title').textContent = `Application Brief: ${brief.vacancy_title} (${brief.organization})`;
     document.getElementById('modal-brief').classList.add('active');
   } catch (err) {
-    alert('Σφάλμα δημιουργίας brief: ' + err.message);
+    alert('Error loading brief: ' + err.message);
   }
 }
 
 function openCvAnalyzer(id, title) {
   activeCvVacancyId = id;
-  document.getElementById('cv-modal-title').textContent = `🔍 Αναλυτής Κάλυψης CV: ${title}`;
+  document.getElementById('cv-modal-title').textContent = `CV Coverage Analyzer: ${title}`;
   document.getElementById('cv-analysis-results').style.display = 'none';
   document.getElementById('modal-cv-analyzer').classList.add('active');
 }
@@ -488,23 +486,23 @@ function renderCvResults(cov) {
   container.style.display = 'block';
 
   container.innerHTML = `
-    <div style="background: #F8FAFC; padding: 16px; border-radius: 6px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
-      <h3 style="font-size: 1.1rem; color: #0D5C63; margin-bottom: 6px;">
-        Ποσοστό Κάλυψης: <strong>${cov.coverage_percentage}%</strong> (${cov.matched_keywords.length}/${cov.total_required_keywords} λέξεις-κλειδιά)
+    <div style="background: #FAF9F6; padding: 16px; border-radius: 6px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
+      <h3 style="font-size: 1.05rem; color: #0F5257; margin-bottom: 6px;">
+        Coverage Percentage: <strong>${cov.coverage_percentage}%</strong> (${cov.matched_keywords.length}/${cov.total_required_keywords} target terms)
       </h3>
     </div>
 
     <div class="brief-section">
       <h3>Matched Keywords in CV</h3>
       <div>
-        ${cov.matched_keywords.length > 0 ? cov.matched_keywords.map(k => `<span class="kw-badge kw-matched">✓ ${escapeHtml(k)}</span>`).join('') : '<span class="text-muted">None</span>'}
+        ${cov.matched_keywords.length > 0 ? cov.matched_keywords.map(k => `<span class="kw-badge kw-matched">[MATCHED] ${escapeHtml(k)}</span>`).join('') : '<span class="text-muted">None</span>'}
       </div>
     </div>
 
     <div class="brief-section" style="margin-top: 12px;">
       <h3>Missing Keywords to Add</h3>
       <div>
-        ${cov.missing_keywords.length > 0 ? cov.missing_keywords.map(k => `<span class="kw-badge kw-missing">✗ ${escapeHtml(k)}</span>`).join('') : '<span class="text-muted">None</span>'}
+        ${cov.missing_keywords.length > 0 ? cov.missing_keywords.map(k => `<span class="kw-badge kw-missing">[MISSING] ${escapeHtml(k)}</span>`).join('') : '<span class="text-muted">None</span>'}
       </div>
     </div>
 
@@ -518,14 +516,14 @@ function renderCvResults(cov) {
 }
 
 async function deleteVacancy(id) {
-  if (!confirm(`Είστε σίγουροι ότι θέλετε να διαγράψετε τη θέση ${id};`)) return;
+  if (!confirm(`Are you sure you want to delete vacancy ${id}?`)) return;
   try {
     const res = await fetch(`/api/vacancies/${id}`, { method: 'DELETE' });
     if (res.ok) {
       await fetchVacancies();
     }
   } catch (err) {
-    alert('Σφάλμα διαγραφής: ' + err.message);
+    alert('Delete error: ' + err.message);
   }
 }
 

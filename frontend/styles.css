@@ -1,17 +1,26 @@
-/* Premium Minimalist Design System */
+/* AEGIS-LEDGER Design System - Premium Minimalist */
 :root {
   --bg-main: #FAF9F6;
   --bg-card: #FFFFFF;
   --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
   --text-main: #1E293B;
   --text-muted: #64748B;
-  --accent-teal: #0D5C63;
-  --accent-teal-bg: #CCFBF1;
-  --accent-teal-text: #0F766E;
-  --accent-ochre-bg: #FEF3C7;
-  --accent-ochre-text: #92400E;
-  --accent-rose-bg: #FFE4E6;
-  --accent-rose-text: #991B1B;
+  --brand-teal: #0F5257;
+  --brand-teal-hover: #093A3E;
+  
+  --status-eligible-bg: #E6F4F1;
+  --status-eligible-border: #B8E2DA;
+  --status-eligible-text: #0F5257;
+
+  --status-conditional-bg: #FDF4E7;
+  --status-conditional-border: #F6DEBD;
+  --status-conditional-text: #8C531B;
+
+  --status-disqualified-bg: #FDF0F0;
+  --status-disqualified-border: #F9D0D0;
+  --status-disqualified-text: #992B2B;
+
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -44,15 +53,26 @@ body {
   align-items: center;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+}
+
 .brand-title {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-main);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .brand-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   display: block;
 }
@@ -74,12 +94,12 @@ body {
 }
 
 .btn-primary {
-  background: var(--accent-teal);
+  background: var(--brand-teal);
   color: #FFF;
 }
 
 .btn-primary:hover {
-  background: #09474D;
+  background: var(--brand-teal-hover);
 }
 
 .btn-outline {
@@ -94,14 +114,14 @@ body {
 
 .btn-danger {
   background: #FFF;
-  border-color: #FECDD3;
-  color: var(--accent-rose-text);
-  padding: 4px 8px;
+  border-color: var(--status-disqualified-border);
+  color: var(--status-disqualified-text);
+  padding: 4px 10px;
   font-size: 0.75rem;
 }
 
 .btn-danger:hover {
-  background: var(--accent-rose-bg);
+  background: var(--status-disqualified-bg);
 }
 
 .main-container {
@@ -127,14 +147,15 @@ body {
 }
 
 .stat-label {
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .stat-value {
+  font-family: var(--font-mono);
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--text-main);
@@ -142,7 +163,7 @@ body {
 }
 
 .text-teal {
-  color: var(--accent-teal-text);
+  color: var(--brand-teal);
 }
 
 .text-muted {
@@ -194,7 +215,7 @@ body {
 
 .form-control:focus {
   outline: none;
-  border-color: var(--accent-teal);
+  border-color: var(--brand-teal);
 }
 
 .section-header {
@@ -229,7 +250,7 @@ body {
 }
 
 .vacancy-card:hover {
-  border-color: #CBD5E1;
+  border-color: var(--border-hover);
 }
 
 .card-top {
@@ -270,9 +291,9 @@ body {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #0F766E;
-  background: #F0FDF4;
-  border: 1px solid #BBF7D0;
+  color: var(--status-eligible-text);
+  background: var(--status-eligible-bg);
+  border: 1px solid var(--status-eligible-border);
   padding: 2px 8px;
   border-radius: 4px;
   margin-left: 6px;
@@ -288,18 +309,21 @@ body {
 }
 
 .pill-eligible {
-  background: var(--accent-teal-bg);
-  color: var(--accent-teal-text);
+  background: var(--status-eligible-bg);
+  border: 1px solid var(--status-eligible-border);
+  color: var(--status-eligible-text);
 }
 
 .pill-conditional {
-  background: var(--accent-ochre-bg);
-  color: var(--accent-ochre-text);
+  background: var(--status-conditional-bg);
+  border: 1px solid var(--status-conditional-border);
+  color: var(--status-conditional-text);
 }
 
 .pill-disqualified {
-  background: var(--accent-rose-bg);
-  color: var(--accent-rose-text);
+  background: var(--status-disqualified-bg);
+  border: 1px solid var(--status-disqualified-border);
+  color: var(--status-disqualified-text);
 }
 
 .card-body-row {
@@ -317,6 +341,7 @@ body {
   padding: 12px 16px;
   background: var(--bg-main);
   border-radius: 6px;
+  border: 1px solid var(--border-color);
 }
 
 .score-box {
@@ -367,7 +392,7 @@ body {
 }
 
 .source-link {
-  color: var(--accent-teal);
+  color: var(--brand-teal);
   text-decoration: none;
   font-weight: 500;
 }
@@ -396,12 +421,12 @@ body {
 
 .modal-card {
   background: #FFF;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 90%;
   max-width: 680px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
 }
@@ -457,7 +482,7 @@ body {
 .brief-section h3 {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--accent-teal);
+  color: var(--brand-teal);
   margin-bottom: 8px;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 4px;
@@ -482,13 +507,15 @@ body {
 }
 
 .kw-matched {
-  background: var(--accent-teal-bg);
-  color: var(--accent-teal-text);
+  background: var(--status-eligible-bg);
+  border: 1px solid var(--status-eligible-border);
+  color: var(--status-eligible-text);
 }
 
 .kw-missing {
-  background: var(--accent-rose-bg);
-  color: var(--accent-rose-text);
+  background: var(--status-disqualified-bg);
+  border: 1px solid var(--status-disqualified-border);
+  color: var(--status-disqualified-text);
 }
 
 .app-footer {

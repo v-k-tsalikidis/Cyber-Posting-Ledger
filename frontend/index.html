@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vacancy Intelligence Ledger - Cyber Vacancy Tracker</title>
+  <title>AEGIS-LEDGER - Vacancy Intelligence Ledger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <h1 class="brand-title">Vacancy Intelligence Ledger</h1>
-        <span class="brand-subtitle">Cyber Vacancy Intelligence, CyBOK Mapping &amp; CV Coverage Analyzer</span>
+        <img src="assets/aegis_logo.svg" alt="AEGIS Logo" class="brand-logo">
+        <div>
+          <h1 class="brand-title">AEGIS-LEDGER</h1>
+          <span class="brand-subtitle">Academic &amp; Recruiter-Grounded Cybersecurity Career Intelligence</span>
+        </div>
       </div>
       <div class="header-actions">
-        <select id="scenario-selector" class="form-control" style="width: auto; font-weight: 600;">
-          <option value="current">📋 Τρέχον Προφίλ (Current)</option>
-          <option value="post_thesis">🎓 Μετά τη Διατριβή (Post-Thesis Target)</option>
-          <option value="nato_specialist">🛡️ NATO CIS/COMSEC Specialist</option>
+        <select id="scenario-selector" class="form-control" style="width: auto; font-weight: 500;">
+          <option value="current">Current Profile</option>
+          <option value="post_thesis">Post-Thesis Target Profile</option>
+          <option value="nato_specialist">NATO CIS/COMSEC Focus</option>
         </select>
-        <button class="btn btn-outline" id="btn-open-profile">👤 Τα Στοιχεία Μου</button>
-        <button class="btn btn-primary" id="btn-open-add-vacancy">➕ Προσθήκη Νέας Θέσης</button>
+        <button class="btn btn-outline" id="btn-open-profile">Candidate Profile</button>
+        <button class="btn btn-primary" id="btn-open-add-vacancy">Add New Vacancy</button>
       </div>
     </div>
   </header>
@@ -43,47 +46,47 @@
         <span class="stat-value" id="stat-tier1">0</span>
       </div>
       <div class="stats-card">
-        <span class="stat-label">Candidate Profile</span>
-        <span class="stat-value text-muted" id="stat-candidate-name" style="font-size: 1.05rem; margin-top: 10px;">-</span>
+        <span class="stat-label">Active Candidate</span>
+        <span class="stat-value text-muted" id="stat-candidate-name" style="font-size: 1rem; margin-top: 10px;">-</span>
       </div>
     </section>
 
     <section class="content-layout">
       <aside class="sidebar">
         <div class="panel">
-          <h2 class="panel-title">Φίλτρα Αναζήτησης</h2>
+          <h2 class="panel-title">Filters &amp; Search</h2>
           <div class="filter-group">
             <label for="filter-status">Fit Status</label>
             <select id="filter-status" class="form-control">
-              <option value="ALL">Όλα τα Statuses</option>
-              <option value="Eligible">Eligible (Πλήρης Καταλληλότητα)</option>
-              <option value="Conditional">Conditional (Υπό Προϋποθέσεις)</option>
-              <option value="Disqualified">Disqualified (Αποκλεισμένος)</option>
+              <option value="ALL">All Statuses</option>
+              <option value="Eligible">Eligible</option>
+              <option value="Conditional">Conditional</option>
+              <option value="Disqualified">Disqualified</option>
             </select>
           </div>
           <div class="filter-group">
-            <label for="filter-tier">Κατηγορία Οργανισμού (Tier)</label>
+            <label for="filter-tier">Organization Tier</label>
             <select id="filter-tier" class="form-control">
-              <option value="ALL">Όλα τα Tiers</option>
+              <option value="ALL">All Tiers</option>
               <option value="1">Tier 1 (Core NATO/EU Cyber Orgs)</option>
               <option value="2">Tier 2 (EU Agencies)</option>
               <option value="3">Tier 3 (General Orgs)</option>
             </select>
           </div>
           <div class="filter-group">
-            <label for="filter-search">Αναζήτηση</label>
-            <input type="text" id="filter-search" class="form-control" placeholder="Τίτλος, Οργανισμός, Skill...">
+            <label for="filter-search">Search Keyword</label>
+            <input type="text" id="filter-search" class="form-control" placeholder="Title, agency, domain...">
           </div>
         </div>
       </aside>
 
       <div class="main-content">
         <div class="section-header">
-          <h2 class="section-title">Κατάλογος Αξιολογημένων Θέσεων</h2>
+          <h2 class="section-title">Evaluated Vacancy Ledger</h2>
           <span class="section-count" id="list-count">0 items</span>
         </div>
         <div class="vacancy-grid" id="vacancy-list">
-          <div class="loading-state">Φόρτωση θέσεων...</div>
+          <div class="loading-state">Loading ledger data...</div>
         </div>
       </div>
     </section>
@@ -93,21 +96,21 @@
   <div class="modal-backdrop" id="modal-profile">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>👤 Τα Στοιχεία Μου (Candidate Profile)</h2>
+        <h2>Candidate Profile Specifications</h2>
         <button class="modal-close" id="close-profile">&times;</button>
       </div>
       <form id="form-profile" class="modal-body">
         <div class="form-grid">
           <div class="form-group">
-            <label>Ονοματεπώνυμο</label>
+            <label>Full Name</label>
             <input type="text" id="prof-name" class="form-control" required>
           </div>
           <div class="form-group">
-            <label>Εθνικότητες (διαχωρισμένα με κόμμα)</label>
+            <label>Nationalities (comma separated)</label>
             <input type="text" id="prof-nats" class="form-control" placeholder="Greek, EU, NATO" required>
           </div>
           <div class="form-group">
-            <label>Επίπεδο Πτυχίου</label>
+            <label>Degree Level</label>
             <select id="prof-degree" class="form-control">
               <option value="BSc">Bachelor (BSc)</option>
               <option value="Master" selected>Master (MSc)</option>
@@ -115,11 +118,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Συνολικά Έτη Προϋπηρεσίας</label>
+            <label>Total Experience Years</label>
             <input type="number" id="prof-exp-total" class="form-control" min="0" required>
           </div>
           <div class="form-group">
-            <label>Έτη Εμπειρίας στο Cyber/INFOSEC</label>
+            <label>Cyber Experience Years</label>
             <input type="number" id="prof-exp-cyber" class="form-control" min="0" required>
           </div>
           <div class="form-group">
@@ -127,17 +130,17 @@
             <input type="text" id="prof-clearance" class="form-control" placeholder="National Secret / NATO Secret eligible">
           </div>
           <div class="form-group">
-            <label>Γλώσσες (διαχωρισμένες με κόμμα)</label>
+            <label>Languages (comma separated)</label>
             <input type="text" id="prof-languages" class="form-control" placeholder="English, Greek">
           </div>
           <div class="form-group full-width">
-            <label>Δεξιότητες &amp; Domains (διαχωρισμένα με κόμμα)</label>
-            <textarea id="prof-skills" class="form-control" rows="3" placeholder="CIS, INFOSEC, COMSEC, CTI, SOC, GRC, NIST CSF, OWASP, MITRE ATT&CK, Python, NATO, EU, Incident Response"></textarea>
+            <label>Skills &amp; Domains (comma separated)</label>
+            <textarea id="prof-skills" class="form-control" rows="3" placeholder="CIS, INFOSEC, COMSEC, CTI, SOC, GRC, NIST CSF, OWASP, MITRE ATT&CK, Python, NATO, EU"></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline" id="cancel-profile">Ακύρωση</button>
-          <button type="submit" class="btn btn-primary">💾 Αποθήκευση Στοιχείων</button>
+          <button type="button" class="btn btn-outline" id="cancel-profile">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Profile</button>
         </div>
       </form>
     </div>
@@ -147,25 +150,25 @@
   <div class="modal-backdrop" id="modal-add-vacancy">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>➕ Προσθήκη Νέας Θέσης &amp; Υπολογισμός Fit Score</h2>
+        <h2>Add Vacancy &amp; Calculate Scores</h2>
         <button class="modal-close" id="close-add-vacancy">&times;</button>
       </div>
       <form id="form-add-vacancy" class="modal-body">
         <div class="form-grid">
           <div class="form-group">
-            <label>ID Θέσης (e.g. VAC-004)</label>
+            <label>Record ID (e.g. VAC-004)</label>
             <input type="text" id="vac-id" class="form-control" required placeholder="VAC-004">
           </div>
           <div class="form-group">
-            <label>Τίτλος Θέσης</label>
+            <label>Job Title</label>
             <input type="text" id="vac-title" class="form-control" required placeholder="Senior CTI Analyst">
           </div>
           <div class="form-group">
-            <label>Οργανισμός</label>
+            <label>Organization</label>
             <input type="text" id="vac-org" class="form-control" required placeholder="ENISA / NCIA / CERT-EU / eu-LISA">
           </div>
           <div class="form-group">
-            <label>Κατηγορία Οργανισμού (Tier)</label>
+            <label>Organization Tier</label>
             <select id="vac-tier" class="form-control">
               <option value="1">Tier 1 (Core NATO/EU Cyber Agency)</option>
               <option value="2" selected>Tier 2 (EU Agency / Int'l Body)</option>
@@ -173,19 +176,19 @@
             </select>
           </div>
           <div class="form-group full-width">
-            <label>Επίσημο URL Προκήρυξης</label>
+            <label>Official Announcement URL</label>
             <input type="url" id="vac-url" class="form-control" required placeholder="https://www.enisa.europa.eu/recruitment/vacancies/...">
           </div>
           <div class="form-group">
-            <label>Τοποθεσία</label>
+            <label>Location</label>
             <input type="text" id="vac-location" class="form-control" placeholder="Athens, Greece">
           </div>
           <div class="form-group">
-            <label>Βαθμός / Grade</label>
+            <label>Grade / Level</label>
             <input type="text" id="vac-grade" class="form-control" placeholder="AD 7 / Grade 15">
           </div>
           <div class="form-group">
-            <label>Απαιτούμενο Πτυχίο</label>
+            <label>Minimum Degree Level</label>
             <select id="vac-min-degree" class="form-control">
               <option value="Bachelor">Bachelor (BSc)</option>
               <option value="Master" selected>Master (MSc)</option>
@@ -193,25 +196,25 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Απαιτούμενα Έτη Εμπειρίας</label>
+            <label>Minimum Experience Years</label>
             <input type="number" id="vac-min-exp" class="form-control" value="3" min="0">
           </div>
           <div class="form-group">
-            <label>Απαιτούμενο Security Clearance</label>
+            <label>Required Security Clearance</label>
             <input type="text" id="vac-clearance" class="form-control" placeholder="SECRET UE / NATO SECRET / None">
           </div>
           <div class="form-group">
-            <label>Εκτιμώμενος Καθαρός Μισθός (€/μήνα)</label>
+            <label>Estimated Monthly Net EUR (€)</label>
             <input type="number" id="vac-salary" class="form-control" placeholder="5000">
           </div>
           <div class="form-group full-width">
-            <label>Απαιτούμενα Domains &amp; Skills (διαχωρισμένα με κόμμα)</label>
+            <label>Required Domains &amp; Skills (comma separated)</label>
             <input type="text" id="vac-domains" class="form-control" placeholder="INFOSEC, CIS, GRC, CTI, Incident Response">
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline" id="cancel-add-vacancy">Ακύρωση</button>
-          <button type="submit" class="btn btn-primary">⚡ Αποθήκευση &amp; Υπολογισμός Σκορ</button>
+          <button type="button" class="btn btn-outline" id="cancel-add-vacancy">Cancel</button>
+          <button type="submit" class="btn btn-primary">Evaluate &amp; Save</button>
         </div>
       </form>
     </div>
@@ -221,16 +224,16 @@
   <div class="modal-backdrop" id="modal-brief">
     <div class="modal-card" style="max-width: 800px;">
       <div class="modal-header">
-        <h2 id="brief-modal-title">📄 Application Alignment Brief</h2>
+        <h2 id="brief-modal-title">Application Alignment Brief</h2>
         <button class="modal-close" id="close-brief">&times;</button>
       </div>
       <div class="modal-body" id="brief-modal-body">
         <!-- Dynamic Brief Content -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline" id="close-brief-btn">Κλείσιμο</button>
-        <button type="button" class="btn btn-outline" id="print-html-btn">🖨️ HTML Report</button>
-        <button type="button" class="btn btn-primary" id="download-brief-btn">⬇️ Download Brief (Markdown)</button>
+        <button type="button" class="btn btn-outline" id="close-brief-btn">Close</button>
+        <button type="button" class="btn btn-outline" id="print-html-btn">Export HTML Report</button>
+        <button type="button" class="btn btn-primary" id="download-brief-btn">Download Brief (Markdown)</button>
       </div>
     </div>
   </div>
@@ -239,29 +242,29 @@
   <div class="modal-backdrop" id="modal-cv-analyzer">
     <div class="modal-card" style="max-width: 720px;">
       <div class="modal-header">
-        <h2 id="cv-modal-title">🔍 Αναλυτής Κάλυψης Βιογραφικού (CV Coverage)</h2>
+        <h2 id="cv-modal-title">CV Text Coverage Analyzer</h2>
         <button class="modal-close" id="close-cv-analyzer">&times;</button>
       </div>
       <div class="modal-body">
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-          Επικολλήστε το κείμενο του βιογραφικού σας (CV) ή της συνοδευτικής επιστολής (Cover Letter) για να ελέγξετε την επικάλυψη με τις απαιτήσεις της θέσης:
+          Paste candidate CV or Cover Letter Markdown text to evaluate keyword coverage against target vacancy requirements:
         </p>
-        <textarea id="cv-text-input" class="form-control" rows="8" placeholder="Επικολλήστε το κείμενο του CV σας εδώ..."></textarea>
+        <textarea id="cv-text-input" class="form-control" rows="8" placeholder="Paste raw CV text here..."></textarea>
         
         <div id="cv-analysis-results" style="margin-top: 20px; display: none;">
           <!-- Results rendered via JS -->
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline" id="close-cv-btn">Κλείσιμο</button>
-        <button type="button" class="btn btn-primary" id="run-cv-analysis-btn">⚡ Ανάλυση Κάλυψης</button>
+        <button type="button" class="btn btn-outline" id="close-cv-btn">Close</button>
+        <button type="button" class="btn btn-primary" id="run-cv-analysis-btn">Analyze Coverage</button>
       </div>
     </div>
   </div>
 
   <footer class="app-footer">
     <div class="footer-container">
-      <p>Vacancy Intelligence Ledger &bull; CyBOK &amp; NIST NICE Grounding &bull; CV Coverage Analyzer &bull; Confidential Personal Career Intelligence</p>
+      <p>AEGIS-LEDGER &bull; CyBOK v1.1 &amp; NIST NICE Grounded &bull; Recruiter Intelligence Engine &bull; Confidential Personal Career Intelligence</p>
     </div>
   </footer>
 
