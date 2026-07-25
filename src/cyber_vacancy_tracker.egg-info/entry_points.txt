@@ -1,0 +1,2 @@
+[console_scripts]
+cyber-vacancy-tracker = cyber_vacancy_tracker.cli:cli

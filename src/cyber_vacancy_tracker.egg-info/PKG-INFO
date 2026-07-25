@@ -1,0 +1,113 @@
+Metadata-Version: 2.4
+Name: cyber-vacancy-tracker
+Version: 0.1.0
+Summary: Local-first cybersecurity vacancy & career intelligence assessment engine
+Author: Vasileios Tsalikidis
+License: Apache-2.0
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: click>=8.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+
+# Vacancy Intelligence Ledger
+
+### Cyber Vacancy Intelligence Tracker
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](pyproject.toml)
+
+**Vacancy Intelligence Ledger** (package name: `cyber-vacancy-tracker`) is a local-first, context-aware decision engine for tracking, evaluating, and prioritizing cybersecurity, CTI, DevSecOps, and INFOSEC vacancy opportunities across international organizations (EU agencies, NATO bodies, defence & enterprise sectors).
+
+> **Structured fit analysis. Reviewable career evidence.**
+
+---
+
+## Why Use A Dedicated Vacancy Intelligence Engine?
+
+Generic job boards collapse job searching into flat keyword matches or superficial "match percentages." 
+
+**Cyber Vacancy Intelligence Tracker** breaks down opportunity analysis into **four distinct, un-aggregated evaluation dimensions**:
+
+1. **Formal Eligibility Score (0–100):** Evaluates hard eligibility gates (nationality requirements, degree level, mandatory professional experience years, required security clearance status, and language proficiencies).
+2. **Substantive Role Fit Score (0–100):** Measures technical and domain alignment (CIS, INFOSEC, COMSEC, CTI/SOC, Incident Response, GRC, and NATO/EU operational context).
+3. **Strategic Value Score (0–100):** Assesses institutional ecosystem entry value, brand leverage, and long-term career growth.
+4. **Practical Value Score (0–100):** Evaluates compensation standards (e.g. EU post-adjustment grades, tax status), geographic suitability, and contract stability.
+
+---
+
+## Key Features
+
+- **Context-Aware Fit Scoring:** Disqualifies or flags roles that fail hard formal gates before wasting time on application tailoring.
+- **Source Verification & Provenance:** Distinguishes verified official career portals (Tier 1/2) from third-party aggregators to avoid stale or fake listings.
+- **Milestone & Evidence Tracking:** Tracks the complete lifecycle from initial discovery (`Identified`) to `Verified`, `Tailored`, `Submitted`, `Screening`, `Interview`, `Offer`, or `Archived`.
+- **Policy-as-Code & Thresholds:** Supports minimum score policies (e.g., `Formal Eligibility ≥ 80` AND `Strategic Value ≥ 70`) for focused prioritization.
+- **Local-First & Data-Minimized:** Stores data locally in JSON format with full export/import capabilities. No external web scrapers, telemetry, or account sign-ups.
+
+---
+
+## Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/v-k-tsalikidis/cyber-vacancy-tracker.git
+cd cyber-vacancy-tracker
+
+# Install in editable mode with development dependencies
+pip install -e ".[dev]"
+```
+
+### CLI Usage
+
+```bash
+# List pre-loaded synthetic vacancy records
+cyber-vacancy-tracker list
+
+# Add a new vacancy
+cyber-vacancy-tracker add \
+  --title "ICT Security Coordinator" \
+  --org "ENISA" \
+  --tier 1 \
+  --url "https://www.enisa.europa.eu/recruitment/vacancies" \
+  --location "Athens, Greece" \
+  --grade "AD 7" \
+  --clearance "SECRET UE / EU SECRET"
+
+# Evaluate multi-dimensional fit for a vacancy
+cyber-vacancy-tracker score --id VAC-001
+
+# Export summary report in Markdown or JSON
+cyber-vacancy-tracker export --format markdown --out report.md
+```
+
+### Web Dashboard
+
+Run the built-in local dashboard server:
+
+```bash
+cyber-vacancy-tracker serve --port 8000
+```
+
+Open `http://localhost:8000` in your browser to view the minimalist dashboard.
+
+---
+
+## Scoring Rules & Methodology
+
+See [docs/SCORING_METHODOLOGY.md](docs/SCORING_METHODOLOGY.md) for full scoring formulas and threshold rules.
+
+---
+
+## Public Safety & Responsible Boundary
+
+This repository is designed strictly for personal workflow organization and technical demonstration. It uses synthetic demo fixtures and public datasets. See [DISCLAIMER.md](DISCLAIMER.md) for details.
+
+---
+
+## License
+
+Distributed under the Apache 2.0 License. See [LICENSE](LICENSE) for details.
