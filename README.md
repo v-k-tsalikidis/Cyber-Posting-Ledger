@@ -1,14 +1,16 @@
-# AEGIS-LEDGER
+<div align="center">
+  <img src="frontend/assets/aegis_logo.svg" alt="AEGIS Logo" width="48" height="48" />
+  <h1>AEGIS-LEDGER</h1>
+  <p><em>Academic &amp; Recruiter-Grounded Cybersecurity Career Intelligence Platform</em></p>
 
-**AEGIS Vacancy Intelligence Ledger**  
-*Academic & Recruiter-Grounded Cybersecurity Career Intelligence Platform*
-
-[![Python Version](https://img.shields.io/badge/python-3.10%2B-0F5257.svg?style=flat-square)](https://python.org)
-[![CyBOK Taxonomy](https://img.shields.io/badge/CyBOK-v1.1-0F5257.svg?style=flat-square)](https://www.cybok.org)
-[![NIST NICE](https://img.shields.io/badge/NIST-NICE%20Framework-0F5257.svg?style=flat-square)](https://www.nist.gov/itl/applied-cybersecurity/nice)
-[![Version](https://img.shields.io/badge/version-v0.4.0-0F5257.svg?style=flat-square)](docs/RELEASE_NOTES.md)
-[![Tests](https://img.shields.io/badge/tests-17%20passed-0F5257.svg?style=flat-square)](#verification--test-suite)
-[![License](https://img.shields.io/badge/license-MIT-0F5257.svg?style=flat-square)](LICENSE)
+  <p>
+    <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.10%2B-0F5257.svg?style=flat-square" alt="Python 3.10+" /></a>
+    <a href="https://www.cybok.org"><img src="https://img.shields.io/badge/CyBOK-v1.1-0F5257.svg?style=flat-square" alt="CyBOK v1.1" /></a>
+    <a href="https://www.nist.gov/itl/applied-cybersecurity/nice"><img src="https://img.shields.io/badge/NIST-NICE%20Framework-0F5257.svg?style=flat-square" alt="NIST NICE" /></a>
+    <a href="docs/RELEASE_NOTES.md"><img src="https://img.shields.io/badge/version-v0.4.0-0F5257.svg?style=flat-square" alt="Version v0.4.0" /></a>
+    <a href="#verification--test-suite"><img src="https://img.shields.io/badge/tests-17%20passed-0F5257.svg?style=flat-square" alt="17 Tests Passed" /></a>
+  </p>
+</div>
 
 ---
 
