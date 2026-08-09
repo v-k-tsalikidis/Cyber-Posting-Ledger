@@ -10,8 +10,8 @@ This document maintains the version history, feature additions, and release docu
 - **Official Rebrand to AEGIS-LEDGER:**
   - Renamed platform identity to **AEGIS-LEDGER** (*Academic & Recruiter-Grounded Cybersecurity Career Intelligence*).
 - **Brand Style Guide & Vector Logo:**
-  - Added [`docs/BRAND_STYLE_GUIDE.md`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/docs/BRAND_STYLE_GUIDE.md) detailing color tokens, typography rules, SVG logo specs, and zero-emoji guidelines.
-  - Created vector SVG logo mark [`frontend/assets/aegis_logo.svg`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/frontend/assets/aegis_logo.svg).
+  - Added [`docs/BRAND_STYLE_GUIDE.md`](file:///Users/basilt/Projects/NewJob_Cyber/aegis-ledger/docs/BRAND_STYLE_GUIDE.md) detailing color tokens, typography rules, SVG logo specs, and zero-emoji guidelines.
+  - Created vector SVG logo mark [`frontend/assets/aegis_logo.svg`](file:///Users/basilt/Projects/NewJob_Cyber/aegis-ledger/frontend/assets/aegis_logo.svg).
 - **100% Zero-Emoji UI Cleanup:**
   - Completely stripped decorative emojis from Web UI, CLI output, Markdown Briefs, and HTML reports.
   - Applied Warm Off-White paper canvas (`#FAF9F6`), Deep Teal (`#0F5257`), and monospaced numeric scores (`JetBrains Mono`).
@@ -27,7 +27,7 @@ This document maintains the version history, feature additions, and release docu
   - Added **Quantifiable Impact Templates** tailored for recruiter screening (log scale, MTTR %, compliance audit coverage).
   - Added **Score Booster Roadmap** calculating potential max score and step-by-step career path recommendations.
 - **Documentation & Evidence:**
-  - Added [`docs/RECRUITER_INTELLIGENCE.md`](file:///Users/basilt/Projects/NewJob_Cyber/cyber-vacancy-tracker/docs/RECRUITER_INTELLIGENCE.md) explaining recruiter filtering logic, metrics, and certification roadmaps.
+  - Added [`docs/RECRUITER_INTELLIGENCE.md`](file:///Users/basilt/Projects/NewJob_Cyber/aegis-ledger/docs/RECRUITER_INTELLIGENCE.md) explaining recruiter filtering logic, metrics, and certification roadmaps.
 
 ---
 

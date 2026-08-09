@@ -2,13 +2,13 @@
 Unit tests for HTML report exporter.
 """
 
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
+from aegis_ledger.exporter import generate_html_report
+from aegis_ledger.models import (
     CandidateProfile,
-    ProvenanceMetadata,
     PracticalMetrics,
+    ProvenanceMetadata,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.exporter import generate_html_report
 
 
 def test_generate_html_report():

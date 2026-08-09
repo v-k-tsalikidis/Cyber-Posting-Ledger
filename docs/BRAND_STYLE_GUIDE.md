@@ -6,7 +6,7 @@
 
 ## 1. Brand Identity & Purpose
 
-**AEGIS-LEDGER** is an enterprise-grade, local-first decision platform designed to evaluate cybersecurity vacancies against rigorous academic frameworks (**CyBOK v1.1**, **NIST NICE Framework**) and industry **Recruiter Intelligence**.
+**AEGIS-LEDGER** is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using **CyBOK v1.1** and the **NIST NICE Framework** as the vocabulary for the comparison.
 
 The visual language rejects modern AI tropes (bright neon glows, dark glossy cards, decorative emojis) in favor of a **Premium Minimalist** gallery dashboard aesthetic characterized by precision typography, warm paper tones, thin 1px structural hairlines, and desaturated status pills.
 

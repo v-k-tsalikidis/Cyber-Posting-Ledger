@@ -1,23 +1,22 @@
 """
-Unit tests for cyber_vacancy_tracker scoring engine.
+Unit tests for aegis_ledger scoring engine.
 """
 
-from datetime import date
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
+from aegis_ledger.models import (
+    CandidateProfile,
     EligibilityCriteria,
-    SubstantiveRequirements,
-    StrategicMetrics,
+    OrgTier,
     PracticalMetrics,
     ProvenanceMetadata,
-    CandidateProfile,
-    OrgTier,
+    StrategicMetrics,
+    SubstantiveRequirements,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.scoring import (
+from aegis_ledger.scoring import (
     evaluate_formal_eligibility,
-    evaluate_substantive_fit,
-    evaluate_strategic_value,
     evaluate_practical_value,
+    evaluate_strategic_value,
+    evaluate_substantive_fit,
     evaluate_vacancy,
 )
 
@@ -43,7 +42,7 @@ def test_evaluate_formal_eligibility_success():
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
-    score, disqualifications, observations = evaluate_formal_eligibility(profile, vacancy)
+    score, disqualifications, _observations = evaluate_formal_eligibility(profile, vacancy)
     assert score == 100
     assert len(disqualifications) == 0
 
@@ -68,15 +67,13 @@ def test_evaluate_formal_eligibility_nationality_mismatch():
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
-    score, disqualifications, observations = evaluate_formal_eligibility(profile, vacancy)
+    score, disqualifications, _observations = evaluate_formal_eligibility(profile, vacancy)
     assert score < 50
     assert any("Nationality mismatch" in d for d in disqualifications)
 
 
 def test_evaluate_substantive_fit():
-    profile = CandidateProfile(
-        skills_and_domains=["CIS", "INFOSEC", "COMSEC", "NATO", "Python"]
-    )
+    profile = CandidateProfile(skills_and_domains=["CIS", "INFOSEC", "COMSEC", "NATO", "Python"])
 
     vacancy = VacancyRecord(
         id="VAC-TEST-3",
@@ -90,7 +87,7 @@ def test_evaluate_substantive_fit():
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
-    score, observations = evaluate_substantive_fit(profile, vacancy)
+    score, _observations = evaluate_substantive_fit(profile, vacancy)
     assert score >= 80
 
 
@@ -108,7 +105,7 @@ def test_evaluate_strategic_value_tier1():
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
-    score, observations = evaluate_strategic_value(vacancy)
+    score, _observations = evaluate_strategic_value(vacancy)
     assert score >= 85
 
 
@@ -124,7 +121,7 @@ def test_evaluate_practical_value_high_salary():
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
-    score, observations = evaluate_practical_value(vacancy)
+    score, _observations = evaluate_practical_value(vacancy)
     assert score >= 80
 
 

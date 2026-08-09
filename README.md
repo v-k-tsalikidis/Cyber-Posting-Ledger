@@ -16,7 +16,7 @@
 
 ## Executive Summary
 
-AEGIS-LEDGER is an enterprise-grade, local-first decision platform designed to evaluate cybersecurity job opportunities against rigorous academic frameworks (CyBOK v1.1, NIST NICE Framework) and empirical Recruiter Intelligence.
+AEGIS-LEDGER is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using CyBOK v1.1 and the NIST NICE Framework as the vocabulary for the comparison.
 
 Unlike commercial application tracking systems (ATS) that collapse candidate fit into generic percentage matchers (e.g., "78% ATS Match"), AEGIS-LEDGER maintains an auditable evidence ledger across 4 un-aggregated evaluation dimensions:
 
@@ -86,26 +86,26 @@ pip install -e .
 
 ### Run Web Dashboard UI
 ```bash
-python3 -m cyber_vacancy_tracker.cli serve --port 8000
+python3 -m aegis_ledger.cli serve --port 8000
 ```
 Open **[http://localhost:8000](http://localhost:8000)** in your browser.
 
 ### Run CLI Commands
 ```bash
 # List tracked vacancies and fit scores
-cyber-vacancy-tracker list
+aegis-ledger list
 
 # Detailed multi-dimensional evaluation
-cyber-vacancy-tracker score --id VAC-001
+aegis-ledger score --id VAC-001
 
 # Generate Application Alignment Brief
-cyber-vacancy-tracker generate-brief --id VAC-001
+aegis-ledger generate-brief --id VAC-001
 
 # Analyze CV text coverage against vacancy requirements
-cyber-vacancy-tracker analyze-cv --id VAC-001 --cv-file my_cv.md
+aegis-ledger analyze-cv --id VAC-001 --cv-file my_cv.md
 
 # Export publication-quality standalone HTML report
-cyber-vacancy-tracker export-html --id VAC-001 --out report.html
+aegis-ledger export-html --id VAC-001 --out report.html
 ```
 
 ---

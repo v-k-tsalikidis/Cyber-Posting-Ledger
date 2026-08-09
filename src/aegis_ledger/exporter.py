@@ -3,10 +3,11 @@ Publication-Quality HTML Report Exporter for AEGIS-LEDGER.
 Generates standalone, styled HTML assessment briefs with recruiter intelligence (Zero Emojis).
 """
 
-from datetime import datetime
-from cyber_vacancy_tracker.models import VacancyRecord, CandidateProfile
-from cyber_vacancy_tracker.scoring import evaluate_vacancy
-from cyber_vacancy_tracker.generator import generate_application_brief
+from datetime import datetime, timezone
+
+from aegis_ledger.generator import generate_application_brief
+from aegis_ledger.models import CandidateProfile, VacancyRecord
+from aegis_ledger.scoring import evaluate_vacancy
 
 
 def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> str:
@@ -16,17 +17,40 @@ def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> s
     cybok = fit_res.cybok_mapping
     rec = fit_res.recruiter_advice
 
-    status_color = "#0F5257" if fit_res.overall_status == "Eligible" else "#8C531B" if fit_res.overall_status == "Conditional" else "#992B2B"
-    status_bg = "#E6F4F1" if fit_res.overall_status == "Eligible" else "#FDF4E7" if fit_res.overall_status == "Conditional" else "#FDF0F0"
+    status_color = (
+        "#0F5257"
+        if fit_res.overall_status == "Eligible"
+        else "#8C531B"
+        if fit_res.overall_status == "Conditional"
+        else "#992B2B"
+    )
+    status_bg = (
+        "#E6F4F1"
+        if fit_res.overall_status == "Eligible"
+        else "#FDF4E7"
+        if fit_res.overall_status == "Conditional"
+        else "#FDF0F0"
+    )
+
+    # Held and target certifications are badged differently. The markup is
+    # built outside the f-string because reusing the outer quote character
+    # inside one only became legal in Python 3.12, and this package
+    # supports 3.10.
+    HELD_BADGE = '<span style="color:#0F5257;font-weight:700;">[HELD]</span>'
+    TARGET_BADGE = '<span style="color:#8C531B;font-weight:700;">[TARGET]</span>'
 
     certs_html = ""
     if rec:
-        certs_html = "".join([
-            f"<li style='margin-bottom:6px;'>{'<span style=\"color:#0F5257;font-weight:700;\">[HELD]</span>' if c.held else '<span style=\"color:#8C531B;font-weight:700;\">[TARGET]</span>'} <strong>{c.name} ({c.code})</strong> &bull; <em>{c.priority}</em></li>"
-            for c in rec.certification_roadmap.target_certifications
-        ])
+        certs_html = "".join(
+            [
+                "<li style='margin-bottom:6px;'>"
+                f"{HELD_BADGE if c.held else TARGET_BADGE} "
+                f"<strong>{c.name} ({c.code})</strong> &bull; <em>{c.priority}</em></li>"
+                for c in rec.certification_roadmap.target_certifications
+            ]
+        )
 
-    html = f"""<!DOCTYPE html>
+    return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -138,8 +162,12 @@ def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> s
     <div class="header">
       <div>
         <h1 class="title">{vacancy.title}</h1>
-        <p class="subtitle"><strong>{vacancy.organization}</strong> &bull; {vacancy.grade_or_level} &bull; {vacancy.practical.location}</p>
-        <p class="subtitle" style="margin-top: 4px;">Candidate: <strong>{profile.candidate_name}</strong></p>
+        <p class="subtitle"><strong>{vacancy.organization}</strong> &bull; {
+        vacancy.grade_or_level
+    } &bull; {vacancy.practical.location}</p>
+        <p class="subtitle" style="margin-top: 4px;">Candidate: <strong>{
+        profile.candidate_name
+    }</strong></p>
       </div>
       <div>
         <span class="status-badge">{fit_res.overall_status}</span>
@@ -167,11 +195,12 @@ def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> s
 
     <div class="section">
       <h2 class="section-title">CyBOK &amp; NICE Framework Taxonomy</h2>
-      <p><strong>Primary Category:</strong> {cybok.primary_category.value if cybok else 'N/A'}</p>
-      <p><strong>NICE Role Alignment:</strong> {cybok.nice_framework_role if cybok else 'N/A'}</p>
+      <p><strong>Primary Category:</strong> {cybok.primary_category.value if cybok else "N/A"}</p>
+      <p><strong>NICE Role Alignment:</strong> {cybok.nice_framework_role if cybok else "N/A"}</p>
     </div>
 
-    {f'''
+    {
+        f'''
     <div class="section">
       <h2 class="section-title">Recruiter Intelligence &amp; Certification Roadmap</h2>
       <p><strong>Domain Target:</strong> {rec.certification_roadmap.domain_category} | <strong>Potential Max Score:</strong> {rec.potential_max_score}/100</p>
@@ -179,7 +208,10 @@ def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> s
         {certs_html}
       </ul>
     </div>
-    ''' if rec else ''}
+    '''
+        if rec
+        else ""
+    }
 
     <div class="section">
       <h2 class="section-title">Executive Summary</h2>
@@ -189,29 +221,30 @@ def generate_html_report(vacancy: VacancyRecord, profile: CandidateProfile) -> s
     <div class="section">
       <h2 class="section-title">Key Selling Points for Motivation &amp; Cover Letter</h2>
       <ul>
-        {''.join([f"<li><strong>{pt}</strong></li>" for pt in brief.key_selling_points])}
+        {"".join([f"<li><strong>{pt}</strong></li>" for pt in brief.key_selling_points])}
       </ul>
     </div>
 
     <div class="section">
       <h2 class="section-title">Tailored Experience Bullets for CV</h2>
       <ul>
-        {''.join([f"<li>{bullet}</li>" for bullet in brief.tailored_experience_bullets])}
+        {"".join([f"<li>{bullet}</li>" for bullet in brief.tailored_experience_bullets])}
       </ul>
     </div>
 
     <div class="section">
       <h2 class="section-title">Gap Mitigation &amp; Advice</h2>
       <ul>
-        {''.join([f"<li>{adv}</li>" for adv in brief.gap_mitigation_advice])}
+        {"".join([f"<li>{adv}</li>" for adv in brief.gap_mitigation_advice])}
       </ul>
     </div>
 
     <div class="footer">
-      Generated by AEGIS-LEDGER &bull; {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} &bull; Personal Confidential Career Evidence
+      Generated by AEGIS-LEDGER &bull; {
+        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    } &bull; Personal Confidential Career Evidence
     </div>
   </div>
 </body>
 </html>
 """
-    return html

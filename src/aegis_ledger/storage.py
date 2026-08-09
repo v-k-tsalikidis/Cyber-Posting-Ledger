@@ -3,33 +3,32 @@ Local JSON storage repository, candidate profile persistence, and seed data prov
 """
 
 import json
+from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import List, Optional
-from datetime import date, datetime
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
+
+from aegis_ledger.models import (
+    CandidateProfile,
     EligibilityCriteria,
-    SubstantiveRequirements,
-    StrategicMetrics,
-    PracticalMetrics,
-    ProvenanceMetadata,
     Milestone,
     MilestoneStatus,
     OrgTier,
-    CandidateProfile,
+    PracticalMetrics,
+    ProvenanceMetadata,
+    StrategicMetrics,
+    SubstantiveRequirements,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.scoring import evaluate_vacancy
+from aegis_ledger.scoring import evaluate_vacancy
 
-
-DEFAULT_DATA_DIR = Path.home() / ".cyber_vacancy_tracker"
+DEFAULT_DATA_DIR = Path.home() / ".aegis_ledger"
 DEFAULT_VACANCIES_FILE = DEFAULT_DATA_DIR / "vacancies.json"
 DEFAULT_PROFILE_FILE = DEFAULT_DATA_DIR / "candidate_profile.json"
 
 
-def get_default_seed_records() -> List[VacancyRecord]:
+def get_default_seed_records() -> list[VacancyRecord]:
     """Generates synthetic demo seed vacancies based on public organization specs."""
-    now = datetime.now()
-    today = date.today()
+    now = datetime.now(timezone.utc)
+    today = datetime.now(timezone.utc).date()
 
     vac1 = VacancyRecord(
         id="VAC-001",
@@ -70,8 +69,16 @@ def get_default_seed_records() -> List[VacancyRecord]:
             created_at=now,
         ),
         milestones=[
-            Milestone(status=MilestoneStatus.IDENTIFIED, timestamp=now, notes="Discovered via official ENISA recruitment page"),
-            Milestone(status=MilestoneStatus.VERIFIED, timestamp=now, notes="Verified official source URL & deadline"),
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Discovered via official ENISA recruitment page",
+            ),
+            Milestone(
+                status=MilestoneStatus.VERIFIED,
+                timestamp=now,
+                notes="Verified official source URL & deadline",
+            ),
         ],
     )
 
@@ -114,7 +121,11 @@ def get_default_seed_records() -> List[VacancyRecord]:
             created_at=now,
         ),
         milestones=[
-            Milestone(status=MilestoneStatus.IDENTIFIED, timestamp=now, notes="Direct match for NATO CIS & COMSEC background"),
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Direct match for NATO CIS & COMSEC background",
+            ),
         ],
     )
 
@@ -157,16 +168,19 @@ def get_default_seed_records() -> List[VacancyRecord]:
             created_at=now,
         ),
         milestones=[
-            Milestone(status=MilestoneStatus.IDENTIFIED, timestamp=now, notes="Aligns with CTI & Threat Graph research"),
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Aligns with CTI & Threat Graph research",
+            ),
         ],
     )
 
-    records = [vac1, vac2, vac3]
-    return records
+    return [vac1, vac2, vac3]
 
 
 class VacancyStorage:
-    def __init__(self, data_dir: Optional[Path] = None):
+    def __init__(self, data_dir: Path | None = None):
         self.data_dir = data_dir or DEFAULT_DATA_DIR
         self.vacancies_path = self.data_dir / "vacancies.json"
         self.profile_path = self.data_dir / "candidate_profile.json"
@@ -183,7 +197,7 @@ class VacancyStorage:
             prof = CandidateProfile()
             self.save_profile(prof)
             return prof
-        with open(self.profile_path, "r", encoding="utf-8") as f:
+        with open(self.profile_path, encoding="utf-8") as f:
             raw = json.load(f)
         return CandidateProfile.model_validate(raw)
 
@@ -191,17 +205,17 @@ class VacancyStorage:
         with open(self.profile_path, "w", encoding="utf-8") as f:
             json.dump(json.loads(profile.model_dump_json()), f, indent=2)
 
-    def _save_all_vacancies(self, records: List[VacancyRecord]) -> None:
+    def _save_all_vacancies(self, records: list[VacancyRecord]) -> None:
         data = [json.loads(r.model_dump_json()) for r in records]
         with open(self.vacancies_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, default=str)
 
-    def load_all(self) -> List[VacancyRecord]:
+    def load_all(self) -> list[VacancyRecord]:
         if not self.vacancies_path.exists():
             records = get_default_seed_records()
             self._save_all_vacancies(records)
 
-        with open(self.vacancies_path, "r", encoding="utf-8") as f:
+        with open(self.vacancies_path, encoding="utf-8") as f:
             raw_list = json.load(f)
 
         profile = self.load_profile()
@@ -210,7 +224,7 @@ class VacancyStorage:
             r.fit_result = evaluate_vacancy(r, profile)
         return records
 
-    def get_by_id(self, record_id: str) -> Optional[VacancyRecord]:
+    def get_by_id(self, record_id: str) -> VacancyRecord | None:
         records = self.load_all()
         for r in records:
             if r.id.upper() == record_id.upper():
@@ -221,7 +235,10 @@ class VacancyStorage:
         profile = self.load_profile()
         record.fit_result = evaluate_vacancy(record, profile)
         records = self.load_all()
-        existing_index = next((i for i, r in enumerate(records) if r.id.upper() == record.id.upper()), None)
+        existing_index = next(
+            (i for i, r in enumerate(records) if r.id.upper() == record.id.upper()),
+            None,
+        )
         if existing_index is not None:
             records[existing_index] = record
         else:
@@ -241,7 +258,7 @@ class VacancyStorage:
         records = self.load_all()
         lines = [
             "# Vacancy Intelligence Ledger - Summary Report",
-            f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*",
+            f"*Generated on {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')}*",
             "",
             "| ID | Organization | Job Title | Grade | Status | Formal Score | Substantive | Strategic | Practical | Official Source |",
             "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",

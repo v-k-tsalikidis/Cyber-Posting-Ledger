@@ -2,33 +2,32 @@
 Multi-dimensional evaluation engine, CyBOK taxonomy classifier, and PPP calculator for Cyber Vacancy Intelligence Tracker.
 """
 
-from typing import List, Tuple, Optional
-from cyber_vacancy_tracker.models import (
+from aegis_ledger.models import (
     CandidateProfile,
-    VacancyRecord,
-    FitScoreResult,
-    OrgTier,
     CyBOKCategory,
     CyBOKMapping,
+    FitScoreResult,
+    OrgTier,
     PurchasingPowerMetrics,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.recruiter_advisor import generate_recruiter_advice
+from aegis_ledger.recruiter_advisor import generate_recruiter_advice
 
 # Cost of Living Purchasing Power Index relative to Brussels (Base 1.0)
 CITY_PPP_INDEX = {
-    "athens": 1.25,      # Lower cost of living -> Higher purchasing power multiplier
+    "athens": 1.25,  # Lower cost of living -> Higher purchasing power multiplier
     "greece": 1.25,
-    "brussels": 1.00,    # Base
+    "brussels": 1.00,  # Base
     "belgium": 1.00,
-    "the hague": 0.90,   # Netherlands
+    "the hague": 0.90,  # Netherlands
     "netherlands": 0.90,
     "luxembourg": 0.85,  # Higher cost of living
-    "munich": 0.88,      # Germany
+    "munich": 0.88,  # Germany
     "germany": 0.92,
 }
 
 
-def calculate_purchasing_power(location: str, raw_salary: Optional[float]) -> PurchasingPowerMetrics:
+def calculate_purchasing_power(location: str, raw_salary: float | None) -> PurchasingPowerMetrics:
     """Calculates Purchasing Power Parity (PPP) equivalent net salary."""
     loc_lower = location.lower()
     mult = 1.0
@@ -60,10 +59,15 @@ def classify_cybok_taxonomy(vacancy: VacancyRecord) -> CyBOKMapping:
         primary = CyBOKCategory.GOVERNANCE_RISK
         nice_role = "Security Control Assessor / GRC Specialist"
         ka = ["Risk Management & Governance", "Security Culture & Hygiene"]
-    elif any(k in all_tokens for k in ["CTI", "SOC", "INCIDENT RESPONSE", "THREAT HUNTING", "MISP"]):
+    elif any(
+        k in all_tokens for k in ["CTI", "SOC", "INCIDENT RESPONSE", "THREAT HUNTING", "MISP"]
+    ):
         primary = CyBOKCategory.SECURITY_OPERATIONS
         nice_role = "Cyber Defense Analyst / CTI Specialist"
-        ka = ["Security Operations & Incident Management", "Malware & Attack Technologies"]
+        ka = [
+            "Security Operations & Incident Management",
+            "Malware & Attack Technologies",
+        ]
     elif any(k in all_tokens for k in ["CIS", "COMSEC", "NETWORKS", "CRYPTO", "NATO CIS"]):
         primary = CyBOKCategory.NETWORK_INFRASTRUCTURE
         nice_role = "Information Systems Security Officer (ISSO) / Network Security Engineer"
@@ -86,7 +90,7 @@ def classify_cybok_taxonomy(vacancy: VacancyRecord) -> CyBOKMapping:
 
 def evaluate_formal_eligibility(
     profile: CandidateProfile, vacancy: VacancyRecord
-) -> Tuple[int, List[str], List[str]]:
+) -> tuple[int, list[str], list[str]]:
     """
     Evaluates hard formal eligibility gates: nationality, degree, experience, clearance, languages.
     Returns (score, disqualification_reasons, observations).
@@ -100,7 +104,9 @@ def evaluate_formal_eligibility(
     candidate_nats = [n.upper() for n in profile.nationalities]
 
     nat_match = any(
-        c_nat in allowed_nats or ("EU" in allowed_nats and "GREEK" in candidate_nats) or ("NATO" in allowed_nats and "GREEK" in candidate_nats)
+        c_nat in allowed_nats
+        or ("EU" in allowed_nats and "GREEK" in candidate_nats)
+        or ("NATO" in allowed_nats and "GREEK" in candidate_nats)
         for c_nat in candidate_nats
     )
     if not nat_match:
@@ -120,7 +126,9 @@ def evaluate_formal_eligibility(
         )
         score -= 40
     else:
-        observations.append(f"Degree requirement met ({profile.degree_level} >= {vacancy.eligibility.min_degree_level})")
+        observations.append(
+            f"Degree requirement met ({profile.degree_level} >= {vacancy.eligibility.min_degree_level})"
+        )
 
     # 3. Years of Experience
     diff_years = profile.total_experience_years - vacancy.eligibility.min_experience_years
@@ -147,7 +155,7 @@ def evaluate_formal_eligibility(
 
 def evaluate_substantive_fit(
     profile: CandidateProfile, vacancy: VacancyRecord
-) -> Tuple[int, List[str]]:
+) -> tuple[int, list[str]]:
     """
     Evaluates technical and domain alignment (CIS, INFOSEC, COMSEC, CTI/SOC, GRC, NATO/EU context).
     Returns (score, observations).
@@ -163,12 +171,16 @@ def evaluate_substantive_fit(
         match_ratio = len(matched) / len(req_domains)
         domain_pts = int(match_ratio * 30)
         score += domain_pts
-        observations.append(f"Matched {len(matched)}/{len(req_domains)} required domains: {matched}")
+        observations.append(
+            f"Matched {len(matched)}/{len(req_domains)} required domains: {matched}"
+        )
     else:
         score += 20
 
     # Framework & Tech alignment
-    matched_frameworks = [f for f in vacancy.requirements.frameworks if any(f.upper() in s for s in cand_skills)]
+    matched_frameworks = [
+        f for f in vacancy.requirements.frameworks if any(f.upper() in s for s in cand_skills)
+    ]
     if matched_frameworks:
         score += min(15, len(matched_frameworks) * 5)
         observations.append(f"Framework overlap: {matched_frameworks}")
@@ -177,15 +189,19 @@ def evaluate_substantive_fit(
     if vacancy.requirements.nato_eu_context:
         if any(term in cand_skills for term in ["NATO", "EU"]):
             score += 15
-            observations.append("NATO/EU operational context requirement matched candidate background (+15 pts)")
+            observations.append(
+                "NATO/EU operational context requirement matched candidate background (+15 pts)"
+            )
         else:
-            observations.append("NATO/EU operational context requested but missing in candidate profile")
+            observations.append(
+                "NATO/EU operational context requested but missing in candidate profile"
+            )
 
     final_score = max(0, min(100, score))
     return final_score, observations
 
 
-def evaluate_strategic_value(vacancy: VacancyRecord) -> Tuple[int, List[str]]:
+def evaluate_strategic_value(vacancy: VacancyRecord) -> tuple[int, list[str]]:
     """
     Assesses organization tier, brand leverage, and long-term ecosystem value.
     Returns (score, observations).
@@ -208,7 +224,7 @@ def evaluate_strategic_value(vacancy: VacancyRecord) -> Tuple[int, List[str]]:
     return final_score, observations
 
 
-def evaluate_practical_value(vacancy: VacancyRecord) -> Tuple[int, List[str]]:
+def evaluate_practical_value(vacancy: VacancyRecord) -> tuple[int, list[str]]:
     """
     Evaluates salary adequacy, location preference, purchasing power, and contract stability.
     Returns (score, observations).
@@ -216,7 +232,9 @@ def evaluate_practical_value(vacancy: VacancyRecord) -> Tuple[int, List[str]]:
     score = 60
     observations = []
 
-    ppp_metrics = calculate_purchasing_power(vacancy.practical.location, vacancy.practical.estimated_monthly_net_eur)
+    ppp_metrics = calculate_purchasing_power(
+        vacancy.practical.location, vacancy.practical.estimated_monthly_net_eur
+    )
     vacancy.practical.purchasing_power = ppp_metrics
 
     salary = vacancy.practical.estimated_monthly_net_eur
@@ -250,7 +268,7 @@ def evaluate_practical_value(vacancy: VacancyRecord) -> Tuple[int, List[str]]:
 
 
 def evaluate_vacancy(
-    vacancy: VacancyRecord, profile: Optional[CandidateProfile] = None
+    vacancy: VacancyRecord, profile: CandidateProfile | None = None
 ) -> FitScoreResult:
     """
     Runs full multi-dimensional evaluation of a vacancy against candidate profile.

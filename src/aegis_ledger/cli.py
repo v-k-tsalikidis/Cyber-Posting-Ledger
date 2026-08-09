@@ -2,39 +2,33 @@
 Command Line Interface (CLI) & Web Server for AEGIS-LEDGER (Cyber Vacancy Intelligence Tracker).
 """
 
-import sys
-import json
 import http.server
+import json
 import socketserver
+import sys
 from pathlib import Path
-from typing import Optional
+
 import click
 
-from cyber_vacancy_tracker import __version__
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
-    EligibilityCriteria,
-    SubstantiveRequirements,
-    StrategicMetrics,
-    PracticalMetrics,
-    ProvenanceMetadata,
-    Milestone,
-    MilestoneStatus,
-    OrgTier,
-    CandidateProfile,
+from aegis_ledger import __version__
+from aegis_ledger.analyzer import analyze_cv_coverage
+from aegis_ledger.exporter import generate_html_report
+from aegis_ledger.generator import (
+    format_brief_markdown,
+    generate_application_brief,
 )
-from cyber_vacancy_tracker.storage import VacancyStorage
-from cyber_vacancy_tracker.scoring import evaluate_vacancy
-from cyber_vacancy_tracker.generator import generate_application_brief, format_brief_markdown
-from cyber_vacancy_tracker.analyzer import analyze_cv_coverage
-from cyber_vacancy_tracker.exporter import generate_html_report
+from aegis_ledger.models import (
+    CandidateProfile,
+    VacancyRecord,
+)
+from aegis_ledger.scoring import evaluate_vacancy
+from aegis_ledger.storage import VacancyStorage
 
 
 @click.group()
 @click.version_option(version=__version__, prog_name="aegis-ledger")
 def cli():
     """AEGIS-LEDGER CLI - Academic & Recruiter-Grounded Cybersecurity Career Intelligence Engine."""
-    pass
 
 
 @cli.command("list")
@@ -78,11 +72,11 @@ def score_vacancy(record_id: str):
 
     res = evaluate_vacancy(record, profile)
 
-    click.echo(f"\n========================================================")
+    click.echo("\n========================================================")
     click.echo(f" AEGIS-LEDGER FIT ASSESSMENT: {record.id} - {record.title}")
     click.echo(f" Candidate: {profile.candidate_name} ({', '.join(profile.nationalities)})")
     click.echo(f" Organization: {record.organization} ({record.grade_or_level})")
-    click.echo(f"========================================================")
+    click.echo("========================================================")
     click.echo(f" Formal Eligibility Score:   {res.formal_eligibility_score} / 100")
     click.echo(f" Substantive Role Fit Score: {res.substantive_fit_score} / 100")
     click.echo(f" Strategic Value Score:      {res.strategic_value_score} / 100")
@@ -91,7 +85,7 @@ def score_vacancy(record_id: str):
     if res.cybok_mapping:
         click.echo(f" CyBOK Category:             {res.cybok_mapping.primary_category.value}")
         click.echo(f" NICE Role Alignment:        {res.cybok_mapping.nice_framework_role}")
-    click.echo(f"--------------------------------------------------------")
+    click.echo("--------------------------------------------------------")
 
     if res.disqualification_reasons:
         click.echo("\nDisqualification / Alert Reasons:")
@@ -107,7 +101,7 @@ def score_vacancy(record_id: str):
 @cli.command("generate-brief")
 @click.option("--id", "record_id", required=True, help="Vacancy Record ID (e.g., VAC-001)")
 @click.option("--out", "out_file", type=click.Path(), help="Output markdown file path")
-def generate_brief_cmd(record_id: str, out_file: Optional[str]):
+def generate_brief_cmd(record_id: str, out_file: str | None):
     """Generate a tailored Application Alignment Brief for a vacancy."""
     storage = VacancyStorage()
     record = storage.get_by_id(record_id)
@@ -130,7 +124,12 @@ def generate_brief_cmd(record_id: str, out_file: Optional[str]):
 
 @cli.command("analyze-cv")
 @click.option("--id", "record_id", required=True, help="Vacancy Record ID (e.g., VAC-001)")
-@click.option("--cv-file", type=click.Path(exists=True), required=True, help="Path to raw CV markdown/text file")
+@click.option(
+    "--cv-file",
+    type=click.Path(exists=True),
+    required=True,
+    help="Path to raw CV markdown/text file",
+)
 def analyze_cv_cmd(record_id: str, cv_file: str):
     """Analyze CV text coverage against target vacancy requirements."""
     storage = VacancyStorage()
@@ -139,12 +138,14 @@ def analyze_cv_cmd(record_id: str, cv_file: str):
         click.echo(f"Error: Vacancy with ID '{record_id}' not found.", err=True)
         sys.exit(1)
 
-    with open(cv_file, "r", encoding="utf-8") as f:
+    with open(cv_file, encoding="utf-8") as f:
         cv_text = f.read()
 
     res = analyze_cv_coverage(cv_text, record)
     click.echo(f"\n--- CV COVERAGE ANALYSIS FOR {record.id} ---")
-    click.echo(f"Coverage Score: {res.coverage_percentage}% ({len(res.matched_keywords)}/{res.total_required_keywords} keywords)")
+    click.echo(
+        f"Coverage Score: {res.coverage_percentage}% ({len(res.matched_keywords)}/{res.total_required_keywords} keywords)"
+    )
     click.echo(f"Matched Keywords: {', '.join(res.matched_keywords)}")
     click.echo(f"Missing Keywords: {', '.join(res.missing_keywords)}")
     click.echo("\nRecommendations:")
@@ -205,7 +206,9 @@ def serve_dashboard(port: int):
                 else:
                     self.send_error(404, "Vacancy not found")
             elif self.path.startswith("/api/vacancies/") and self.path.endswith("/export-html"):
-                rec_id = self.path.replace("/api/vacancies/", "").replace("/export-html", "").strip()
+                rec_id = (
+                    self.path.replace("/api/vacancies/", "").replace("/export-html", "").strip()
+                )
                 record = storage.get_by_id(rec_id)
                 profile = storage.load_profile()
                 if record:
@@ -230,7 +233,7 @@ def serve_dashboard(port: int):
                     profile = CandidateProfile.model_validate(payload)
                     storage.save_profile(profile)
                     self._send_json({"status": "success", "profile": profile.model_dump()})
-                except Exception as e:
+                except (ValueError, KeyError, TypeError) as e:
                     self._send_json({"status": "error", "message": str(e)}, status=400)
 
             elif self.path == "/api/vacancies":
@@ -238,8 +241,13 @@ def serve_dashboard(port: int):
                     record = VacancyRecord.model_validate(payload)
                     storage.save(record)
                     updated = storage.get_by_id(record.id)
-                    self._send_json({"status": "success", "vacancy": updated.model_dump() if updated else {}})
-                except Exception as e:
+                    self._send_json(
+                        {
+                            "status": "success",
+                            "vacancy": updated.model_dump() if updated else {},
+                        }
+                    )
+                except (ValueError, KeyError, TypeError) as e:
                     self._send_json({"status": "error", "message": str(e)}, status=400)
 
             elif self.path.startswith("/api/vacancies/") and self.path.endswith("/analyze-cv"):

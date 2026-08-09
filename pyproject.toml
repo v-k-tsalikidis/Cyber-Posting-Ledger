@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cyber-vacancy-tracker"
+name = "aegis-ledger"
 version = "0.1.0"
 description = "Local-first cybersecurity vacancy & career intelligence assessment engine"
 readme = "README.md"
@@ -24,9 +24,25 @@ dev = [
 ]
 
 [project.scripts]
-cyber-vacancy-tracker = "cyber_vacancy_tracker.cli:cli"
+aegis-ledger = "aegis_ledger.cli:cli"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "SIM", "UP", "C4", "PIE", "RET", "ISC", "DTZ", "BLE", "RUF"]
+# ruff format owns line length; what survives it is a single long string.
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true

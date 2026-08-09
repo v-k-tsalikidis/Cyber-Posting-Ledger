@@ -3,16 +3,19 @@ Application Alignment Brief Generator for AEGIS-LEDGER.
 Generates tailored cover letter & CV briefs based on multi-dimensional fit analysis and recruiter advisor insights.
 """
 
-from datetime import datetime
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
-    CandidateProfile,
+from datetime import datetime, timezone
+
+from aegis_ledger.models import (
     ApplicationBrief,
+    CandidateProfile,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.scoring import evaluate_vacancy, classify_cybok_taxonomy
+from aegis_ledger.scoring import classify_cybok_taxonomy, evaluate_vacancy
 
 
-def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile) -> ApplicationBrief:
+def generate_application_brief(
+    vacancy: VacancyRecord, profile: CandidateProfile
+) -> ApplicationBrief:
     """
     Generates a structured Application Alignment Brief for a candidate and vacancy.
     """
@@ -35,11 +38,12 @@ def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile
 
     if vacancy.requirements.nato_eu_context:
         selling_points.append(
-            f"Proven operational background in NATO/EU environments and multinational CIS/INFOSEC coordination."
+            "Proven operational background in NATO/EU environments and multinational CIS/INFOSEC coordination."
         )
 
     matched_domains = [
-        d for d in vacancy.requirements.domains
+        d
+        for d in vacancy.requirements.domains
         if any(d.upper() in s.upper() for s in profile.skills_and_domains)
     ]
     if matched_domains:
@@ -48,7 +52,7 @@ def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile
     # Tailored Experience Bullets
     tailored_bullets = [
         f"Highlight lead responsibility in managing {cybok.primary_category.value} frameworks (e.g. NIST CSF 2.0, OWASP, ISO 27001).",
-        f"Emphasize experience in multi-agency/multinational coordination across EU and NATO information systems.",
+        "Emphasize experience in multi-agency/multinational coordination across EU and NATO information systems.",
         f"Reference hands-on experience with core tooling ({', '.join(vacancy.requirements.technologies or ['Python', 'Linux'])}).",
     ]
 
@@ -64,7 +68,9 @@ def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile
         )
 
     if not gap_advice:
-        gap_advice.append("No critical eligibility gaps identified. Proceed with direct CV tailoring and application submission.")
+        gap_advice.append(
+            "No critical eligibility gaps identified. Proceed with direct CV tailoring and application submission."
+        )
 
     return ApplicationBrief(
         vacancy_id=vacancy.id,
@@ -77,7 +83,7 @@ def generate_application_brief(vacancy: VacancyRecord, profile: CandidateProfile
         gap_mitigation_advice=gap_advice,
         cybok_category=cybok.primary_category.value,
         recruiter_advice=fit_res.recruiter_advice,
-        generated_at=datetime.now(),
+        generated_at=datetime.now(timezone.utc),
     )
 
 
@@ -95,7 +101,7 @@ def format_brief_markdown(brief: ApplicationBrief) -> str:
         brief.executive_summary,
         "",
         "## Key Selling Points for Motivation / Cover Letter",
-        "\n".join([f"- **Point {i+1}:** {pt}" for i, pt in enumerate(brief.key_selling_points)]),
+        "\n".join([f"- **Point {i + 1}:** {pt}" for i, pt in enumerate(brief.key_selling_points)]),
         "",
         "## Tailored Experience Bullets for CV",
         "\n".join([f"- {bullet}" for bullet in brief.tailored_experience_bullets]),
@@ -107,32 +113,42 @@ def format_brief_markdown(brief: ApplicationBrief) -> str:
 
     if brief.recruiter_advice:
         rec = brief.recruiter_advice
-        lines.extend([
-            "## Recruiter Intelligence & Career Path Roadmap",
-            f"**Domain Focus:** {rec.certification_roadmap.domain_category}  |  **Potential Max Score:** `{rec.potential_max_score}/100`",
-            "",
-            "### Must-Have & Recommended Certifications",
-            "\n".join([
-                f"- {'[HELD]' if c.held else '[TARGET]'} **{c.name} ({c.code})** - *{c.priority}*"
-                for c in rec.certification_roadmap.target_certifications
-            ]),
-            "",
-            "### Recruiter Metric Quantify Templates",
-            "\n".join([
-                f"- **{m.category}:** *\"{m.template_bullet}\"*  \n  *(Guidance: {m.guidance})*"
-                for m in rec.quantifiable_impact_templates
-            ]),
-            "",
-            "### Score Booster Roadmap",
-            "\n".join([
-                f"{step.step_number}. **{step.title} (+{step.score_delta} pts):** {step.action_item}"
-                for step in rec.score_booster_steps
-            ]),
-            "",
-        ])
+        lines.extend(
+            [
+                "## Recruiter Intelligence & Career Path Roadmap",
+                f"**Domain Focus:** {rec.certification_roadmap.domain_category}  |  **Potential Max Score:** `{rec.potential_max_score}/100`",
+                "",
+                "### Must-Have & Recommended Certifications",
+                "\n".join(
+                    [
+                        f"- {'[HELD]' if c.held else '[TARGET]'} **{c.name} ({c.code})** - *{c.priority}*"
+                        for c in rec.certification_roadmap.target_certifications
+                    ]
+                ),
+                "",
+                "### Recruiter Metric Quantify Templates",
+                "\n".join(
+                    [
+                        f'- **{m.category}:** *"{m.template_bullet}"*  \n  *(Guidance: {m.guidance})*'
+                        for m in rec.quantifiable_impact_templates
+                    ]
+                ),
+                "",
+                "### Score Booster Roadmap",
+                "\n".join(
+                    [
+                        f"{step.step_number}. **{step.title} (+{step.score_delta} pts):** {step.action_item}"
+                        for step in rec.score_booster_steps
+                    ]
+                ),
+                "",
+            ]
+        )
 
-    lines.extend([
-        "---",
-        "*AEGIS-LEDGER &bull; Confidential Personal Career Intelligence*",
-    ])
+    lines.extend(
+        [
+            "---",
+            "*AEGIS-LEDGER &bull; Confidential Personal Career Intelligence*",
+        ]
+    )
     return "\n".join(lines)

@@ -1,17 +1,13 @@
 """
-Unit tests for cyber_vacancy_tracker data models.
+Unit tests for aegis_ledger data models.
 """
 
 from datetime import date
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
-    EligibilityCriteria,
-    SubstantiveRequirements,
-    StrategicMetrics,
-    PracticalMetrics,
-    ProvenanceMetadata,
+
+from aegis_ledger.models import (
     CandidateProfile,
-    OrgTier,
+    ProvenanceMetadata,
+    VacancyRecord,
 )
 
 

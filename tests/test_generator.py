@@ -2,18 +2,23 @@
 Unit tests for CyBOK mapping, PPP calculations, and Application Brief generation.
 """
 
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
-    EligibilityCriteria,
-    SubstantiveRequirements,
-    StrategicMetrics,
-    PracticalMetrics,
-    ProvenanceMetadata,
+from aegis_ledger.generator import (
+    format_brief_markdown,
+    generate_application_brief,
+)
+from aegis_ledger.models import (
     CandidateProfile,
     CyBOKCategory,
+    EligibilityCriteria,
+    PracticalMetrics,
+    ProvenanceMetadata,
+    SubstantiveRequirements,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.scoring import classify_cybok_taxonomy, calculate_purchasing_power
-from cyber_vacancy_tracker.generator import generate_application_brief, format_brief_markdown
+from aegis_ledger.scoring import (
+    calculate_purchasing_power,
+    classify_cybok_taxonomy,
+)
 
 
 def test_classify_cybok_taxonomy_gov():

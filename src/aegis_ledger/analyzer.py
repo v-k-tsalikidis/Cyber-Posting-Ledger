@@ -3,8 +3,7 @@ CV & Cover Letter Text Coverage Analyzer for Cyber Vacancy Intelligence Tracker.
 Performs semantic keyword matching against candidate CV text to report skill coverage and missing terms.
 """
 
-from typing import List
-from cyber_vacancy_tracker.models import VacancyRecord, CVCoverageResult
+from aegis_ledger.models import CVCoverageResult, VacancyRecord
 
 
 def analyze_cv_coverage(cv_text: str, vacancy: VacancyRecord) -> CVCoverageResult:
@@ -19,11 +18,14 @@ def analyze_cv_coverage(cv_text: str, vacancy: VacancyRecord) -> CVCoverageResul
     target_keywords.extend(vacancy.requirements.domains or [])
     target_keywords.extend(vacancy.requirements.frameworks or [])
     target_keywords.extend(vacancy.requirements.technologies or [])
-    
+
     if vacancy.eligibility.min_degree_level:
         target_keywords.append(vacancy.eligibility.min_degree_level)
-    
-    if vacancy.eligibility.security_clearance_required and vacancy.eligibility.security_clearance_required != "None":
+
+    if (
+        vacancy.eligibility.security_clearance_required
+        and vacancy.eligibility.security_clearance_required != "None"
+    ):
         target_keywords.append(vacancy.eligibility.security_clearance_required)
 
     # Deduplicate preserving order
@@ -59,7 +61,9 @@ def analyze_cv_coverage(cv_text: str, vacancy: VacancyRecord) -> CVCoverageResul
             f"Add explicit mentions of missing target keywords: {', '.join(missing)} in your CV Experience section."
         )
     else:
-        recommendations.append("Excellent text alignment! All target vacancy keywords are present in your CV text.")
+        recommendations.append(
+            "Excellent text alignment! All target vacancy keywords are present in your CV text."
+        )
 
     return CVCoverageResult(
         coverage_percentage=coverage_pct,

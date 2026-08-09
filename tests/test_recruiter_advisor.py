@@ -2,13 +2,13 @@
 Unit tests for Recruiter Advisor Engine.
 """
 
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
+from aegis_ledger.models import (
     CandidateProfile,
-    SubstantiveRequirements,
     ProvenanceMetadata,
+    SubstantiveRequirements,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.recruiter_advisor import generate_recruiter_advice
+from aegis_ledger.recruiter_advisor import generate_recruiter_advice
 
 
 def test_generate_recruiter_advice_grc():
@@ -24,7 +24,9 @@ def test_generate_recruiter_advice_grc():
     advice = generate_recruiter_advice(vac, profile)
     assert advice.certification_roadmap.domain_category == "Risk Management & Governance"
     assert len(advice.certification_roadmap.target_certifications) > 0
-    assert any(c.code == "CISSP" and c.held for c in advice.certification_roadmap.target_certifications)
+    assert any(
+        c.code == "CISSP" and c.held for c in advice.certification_roadmap.target_certifications
+    )
     assert len(advice.quantifiable_impact_templates) > 0
     assert len(advice.score_booster_steps) == 3
     assert advice.potential_max_score <= 100
@@ -41,5 +43,7 @@ def test_generate_recruiter_advice_cti():
     profile = CandidateProfile(certifications_held=[])
 
     advice = generate_recruiter_advice(vac, profile)
-    assert advice.certification_roadmap.domain_category == "Security Operations & Incident Management"
+    assert (
+        advice.certification_roadmap.domain_category == "Security Operations & Incident Management"
+    )
     assert any(c.code == "GCTI" for c in advice.certification_roadmap.target_certifications)

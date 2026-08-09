@@ -2,13 +2,13 @@
 Unit tests for CV text coverage analyzer.
 """
 
-from cyber_vacancy_tracker.models import (
-    VacancyRecord,
+from aegis_ledger.analyzer import analyze_cv_coverage
+from aegis_ledger.models import (
     EligibilityCriteria,
-    SubstantiveRequirements,
     ProvenanceMetadata,
+    SubstantiveRequirements,
+    VacancyRecord,
 )
-from cyber_vacancy_tracker.analyzer import analyze_cv_coverage
 
 
 def test_analyze_cv_coverage_full_match():
@@ -16,8 +16,12 @@ def test_analyze_cv_coverage_full_match():
         id="VAC-ANALYZER-1",
         title="CTI Analyst",
         organization="CERT-EU",
-        eligibility=EligibilityCriteria(min_degree_level="Master", security_clearance_required="SECRET UE"),
-        requirements=SubstantiveRequirements(domains=["CTI", "SOC"], frameworks=["MITRE ATT&CK"], technologies=["Python"]),
+        eligibility=EligibilityCriteria(
+            min_degree_level="Master", security_clearance_required="SECRET UE"
+        ),
+        requirements=SubstantiveRequirements(
+            domains=["CTI", "SOC"], frameworks=["MITRE ATT&CK"], technologies=["Python"]
+        ),
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
@@ -37,7 +41,9 @@ def test_analyze_cv_coverage_partial_match():
         id="VAC-ANALYZER-2",
         title="Security Engineer",
         organization="ENISA",
-        requirements=SubstantiveRequirements(domains=["INFOSEC", "COMSEC"], technologies=["Kubernetes", "Python"]),
+        requirements=SubstantiveRequirements(
+            domains=["INFOSEC", "COMSEC"], technologies=["Kubernetes", "Python"]
+        ),
         provenance=ProvenanceMetadata(source_url="https://example.com"),
     )
 
