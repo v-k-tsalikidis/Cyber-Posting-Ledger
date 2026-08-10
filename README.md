@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="frontend/assets/aegis_logo.svg" alt="AEGIS Logo" width="48" height="48" />
+  <img src="src/aegis_ledger/frontend/assets/aegis_logo.svg" alt="AEGIS Logo" width="48" height="48" />
   <h1>AEGIS-LEDGER</h1>
   <p><em>Academic &amp; Recruiter-Grounded Cybersecurity Career Intelligence Platform</em></p>
 
@@ -14,7 +14,7 @@
 
 ---
 
-## Executive Summary
+## What this is
 
 AEGIS-LEDGER is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using CyBOK v1.1 and the NIST NICE Framework as the vocabulary for the comparison.
 
@@ -73,42 +73,88 @@ graph TD
 
 ---
 
-## Installation & Quick Start
+## Quick Start
+
+You need Python 3.10 or newer. Check with `python3 --version`; if that fails,
+install Python from [python.org](https://www.python.org/downloads/).
+
+**1. Get the code and go into the folder.**
 
 ```bash
-# Clone repository
 git clone https://github.com/v-k-tsalikidis/aegis-ledger.git
+```
+
+```bash
 cd aegis-ledger
-
-# Install in editable mode
-pip install -e .
 ```
 
-### Run Web Dashboard UI
-```bash
-python3 -m aegis_ledger.cli serve --port 8000
-```
-Open **[http://localhost:8000](http://localhost:8000)** in your browser.
+**2. Create an isolated environment and install.** The virtual environment
+keeps this project's packages away from the rest of your system.
 
-### Run CLI Commands
 ```bash
-# List tracked vacancies and fit scores
+python3 -m venv .venv && source .venv/bin/activate && pip install -e .
+```
+
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` instead.
+
+**3. See it working.** The tool ships with three example vacancies, so there
+is something to look at before you add your own.
+
+```bash
 aegis-ledger list
+```
 
-# Detailed multi-dimensional evaluation
+You get a table of vacancies with four scores each: formal eligibility,
+substantive fit, strategic value, and practical value. They are kept separate
+on purpose. A role you are formally eligible for can still be a poor fit, and
+collapsing that into one number hides the thing you actually need to decide.
+
+**4. Look at one in detail.**
+
+```bash
 aegis-ledger score --id VAC-001
+```
 
-# Generate Application Alignment Brief
+This shows how each score was reached, so you can disagree with it.
+
+### The rest of the commands
+
+```bash
 aegis-ledger generate-brief --id VAC-001
+```
 
-# Analyze CV text coverage against vacancy requirements
+Writes an application brief for that vacancy: which of your evidence lines up
+with which requirement, and where the gaps are.
+
+```bash
 aegis-ledger analyze-cv --id VAC-001 --cv-file my_cv.md
+```
 
-# Export publication-quality standalone HTML report
+Compares your CV text against the vacancy's requirements and reports what the
+vacancy asks for that your CV does not mention.
+
+```bash
 aegis-ledger export-html --id VAC-001 --out report.html
 ```
 
----
+Writes a single self-contained HTML file you can open in a browser or send on.
+
+```bash
+aegis-ledger serve --port 8000
+```
+
+Opens the same data as a small web dashboard at
+[http://localhost:8000](http://localhost:8000). Press `Ctrl+C` to stop it.
+
+### If something goes wrong
+
+- `command not found: aegis-ledger` — the virtual environment is not active.
+  Run `source .venv/bin/activate` from the project folder.
+- `Address already in use` — something else holds port 8000. Use
+  `--port 8001`.
+
+Everything runs on your machine. Nothing is uploaded, and the tool makes no
+network calls of its own.
 
 ## Verification & Test Suite
 

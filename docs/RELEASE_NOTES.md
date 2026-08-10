@@ -11,7 +11,7 @@ This document maintains the version history, feature additions, and release docu
   - Renamed platform identity to **AEGIS-LEDGER** (*Academic & Recruiter-Grounded Cybersecurity Career Intelligence*).
 - **Brand Style Guide & Vector Logo:**
   - Added [`docs/BRAND_STYLE_GUIDE.md`](file:///Users/basilt/Projects/NewJob_Cyber/aegis-ledger/docs/BRAND_STYLE_GUIDE.md) detailing color tokens, typography rules, SVG logo specs, and zero-emoji guidelines.
-  - Created vector SVG logo mark [`frontend/assets/aegis_logo.svg`](file:///Users/basilt/Projects/NewJob_Cyber/aegis-ledger/frontend/assets/aegis_logo.svg).
+  - Created vector SVG logo mark `src/aegis_ledger/frontend/assets/aegis_logo.svg`.
 - **100% Zero-Emoji UI Cleanup:**
   - Completely stripped decorative emojis from Web UI, CLI output, Markdown Briefs, and HTML reports.
   - Applied Warm Off-White paper canvas (`#FAF9F6`), Deep Teal (`#0F5257`), and monospaced numeric scores (`JetBrains Mono`).
