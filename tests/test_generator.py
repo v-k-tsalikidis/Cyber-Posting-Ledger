@@ -2,11 +2,11 @@
 Unit tests for CyBOK mapping, PPP calculations, and Application Brief generation.
 """
 
-from aegis_ledger.generator import (
+from cyber_posting_ledger.generator import (
     format_brief_markdown,
     generate_application_brief,
 )
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     CyBOKCategory,
     EligibilityCriteria,
@@ -15,7 +15,7 @@ from aegis_ledger.models import (
     SubstantiveRequirements,
     VacancyRecord,
 )
-from aegis_ledger.scoring import (
+from cyber_posting_ledger.scoring import (
     calculate_purchasing_power,
     classify_cybok_taxonomy,
 )

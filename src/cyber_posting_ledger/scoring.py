@@ -2,7 +2,7 @@
 Multi-dimensional evaluation engine, CyBOK taxonomy classifier, and PPP calculator for Cyber Vacancy Intelligence Tracker.
 """
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     CyBOKCategory,
     CyBOKMapping,
@@ -11,7 +11,7 @@ from aegis_ledger.models import (
     PurchasingPowerMetrics,
     VacancyRecord,
 )
-from aegis_ledger.recruiter_advisor import generate_recruiter_advice
+from cyber_posting_ledger.recruiter_advisor import generate_recruiter_advice
 
 # Cost of Living Purchasing Power Index relative to Brussels (Base 1.0)
 CITY_PPP_INDEX = {

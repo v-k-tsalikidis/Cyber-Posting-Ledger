@@ -1,7 +1,6 @@
 <div align="center">
-  <img src="src/aegis_ledger/frontend/assets/aegis_logo.svg" alt="AEGIS Logo" width="48" height="48" />
-  <h1>AEGIS-LEDGER</h1>
-  <p><em>Academic &amp; Recruiter-Grounded Cybersecurity Career Intelligence Platform</em></p>
+  <h1>Cyber Posting Ledger</h1>
+  <p><em>Assess a cybersecurity vacancy against your own evidence, and keep the reasoning</em></p>
 
   <p>
     <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.10%2B-0F5257.svg?style=flat-square" alt="Python 3.10+" /></a>
@@ -16,9 +15,9 @@
 
 ## What this is
 
-AEGIS-LEDGER is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using CyBOK v1.1 and the NIST NICE Framework as the vocabulary for the comparison.
+Cyber Posting Ledger is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using CyBOK v1.1 and the NIST NICE Framework as the vocabulary for the comparison.
 
-Unlike commercial application tracking systems (ATS) that collapse candidate fit into generic percentage matchers (e.g., "78% ATS Match"), AEGIS-LEDGER maintains an auditable evidence ledger across 4 un-aggregated evaluation dimensions:
+Unlike commercial application tracking systems (ATS) that collapse candidate fit into generic percentage matchers (e.g., "78% ATS Match"), Cyber Posting Ledger maintains an auditable evidence ledger across 4 un-aggregated evaluation dimensions:
 
 1. **Formal Eligibility (Hard Gates):** EU/NATO nationality restrictions, degree level, experience years, security clearance (NATO SECRET / SECRET UE), and language proficiencies.
 2. **Substantive Role Fit:** CyBOK Knowledge Area taxonomy mapping, NIST NICE Framework role alignment, technical domain match ratio, and NATO/EU operational context bonus.
@@ -31,7 +30,7 @@ Unlike commercial application tracking systems (ATS) that collapse candidate fit
 
 ```mermaid
 graph TD
-    A["Public Vacancy Announcement"] --> B["AEGIS-LEDGER Assessment Engine"]
+    A["Public Vacancy Announcement"] --> B["Cyber Posting Ledger Assessment Engine"]
     C["Candidate Profile Specifications"] --> B
     
     B --> D["Formal Eligibility Evaluator"]
@@ -81,11 +80,11 @@ install Python from [python.org](https://www.python.org/downloads/).
 **1. Get the code and go into the folder.**
 
 ```bash
-git clone https://github.com/v-k-tsalikidis/aegis-ledger.git
+git clone https://github.com/v-k-tsalikidis/Cyber-Posting-Ledger.git
 ```
 
 ```bash
-cd aegis-ledger
+cd cyber-posting-ledger
 ```
 
 **2. Create an isolated environment and install.** The virtual environment
@@ -101,7 +100,7 @@ On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` instead.
 is something to look at before you add your own.
 
 ```bash
-aegis-ledger list
+cyber-posting-ledger list
 ```
 
 You get a table of vacancies with four scores each: formal eligibility,
@@ -112,7 +111,7 @@ collapsing that into one number hides the thing you actually need to decide.
 **4. Look at one in detail.**
 
 ```bash
-aegis-ledger score --id VAC-001
+cyber-posting-ledger score --id VAC-001
 ```
 
 This shows how each score was reached, so you can disagree with it.
@@ -120,27 +119,27 @@ This shows how each score was reached, so you can disagree with it.
 ### The rest of the commands
 
 ```bash
-aegis-ledger generate-brief --id VAC-001
+cyber-posting-ledger generate-brief --id VAC-001
 ```
 
 Writes an application brief for that vacancy: which of your evidence lines up
 with which requirement, and where the gaps are.
 
 ```bash
-aegis-ledger analyze-cv --id VAC-001 --cv-file my_cv.md
+cyber-posting-ledger analyze-cv --id VAC-001 --cv-file my_cv.md
 ```
 
 Compares your CV text against the vacancy's requirements and reports what the
 vacancy asks for that your CV does not mention.
 
 ```bash
-aegis-ledger export-html --id VAC-001 --out report.html
+cyber-posting-ledger export-html --id VAC-001 --out report.html
 ```
 
 Writes a single self-contained HTML file you can open in a browser or send on.
 
 ```bash
-aegis-ledger serve --port 8000
+cyber-posting-ledger serve --port 8000
 ```
 
 Opens the same data as a small web dashboard at
@@ -148,7 +147,7 @@ Opens the same data as a small web dashboard at
 
 ### If something goes wrong
 
-- `command not found: aegis-ledger` — the virtual environment is not active.
+- `command not found: cyber-posting-ledger` — the virtual environment is not active.
   Run `source .venv/bin/activate` from the project folder.
 - `Address already in use` — something else holds port 8000. Use
   `--port 8001`.
@@ -174,4 +173,4 @@ python3 -m pytest
 
 ---
 
-*AEGIS-LEDGER &bull; Personal Confidential Career Evidence &bull; Academic & Recruiter Grounded*
+*Cyber Posting Ledger &bull; Personal Confidential Career Evidence &bull; Academic & Recruiter Grounded*

@@ -6,7 +6,7 @@ import json
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     EligibilityCriteria,
     Milestone,
@@ -18,9 +18,9 @@ from aegis_ledger.models import (
     SubstantiveRequirements,
     VacancyRecord,
 )
-from aegis_ledger.scoring import evaluate_vacancy
+from cyber_posting_ledger.scoring import evaluate_vacancy
 
-DEFAULT_DATA_DIR = Path.home() / ".aegis_ledger"
+DEFAULT_DATA_DIR = Path.home() / ".cyber_posting_ledger"
 DEFAULT_VACANCIES_FILE = DEFAULT_DATA_DIR / "vacancies.json"
 DEFAULT_PROFILE_FILE = DEFAULT_DATA_DIR / "candidate_profile.json"
 

@@ -6,3 +6,6 @@ __pycache__/
 .ds_store
 .DS_Store
 .vscode/
+build/
+dist/
+*.egg-info/

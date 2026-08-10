@@ -1,8 +1,8 @@
 """
-Unit tests for aegis_ledger scoring engine.
+Unit tests for cyber_posting_ledger scoring engine.
 """
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     EligibilityCriteria,
     OrgTier,
@@ -12,7 +12,7 @@ from aegis_ledger.models import (
     SubstantiveRequirements,
     VacancyRecord,
 )
-from aegis_ledger.scoring import (
+from cyber_posting_ledger.scoring import (
     evaluate_formal_eligibility,
     evaluate_practical_value,
     evaluate_strategic_value,

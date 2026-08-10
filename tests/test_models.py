@@ -1,10 +1,10 @@
 """
-Unit tests for aegis_ledger data models.
+Unit tests for cyber_posting_ledger data models.
 """
 
 from datetime import date
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     ProvenanceMetadata,
     VacancyRecord,

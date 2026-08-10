@@ -1,12 +1,12 @@
-# AEGIS-LEDGER Brand Style Guide & Design System
+# Cyber Posting Ledger Brand Style Guide & Design System
 
-*AEGIS Vacancy Intelligence Ledger — Academic & Recruiter-Grounded Cybersecurity Career Intelligence*
+*Cyber Posting Ledger Vacancy Intelligence Ledger — Academic & Recruiter-Grounded Cybersecurity Career Intelligence*
 
 ---
 
 ## 1. Brand Identity & Purpose
 
-**AEGIS-LEDGER** is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using **CyBOK v1.1** and the **NIST NICE Framework** as the vocabulary for the comparison.
+**Cyber Posting Ledger** is a local-first tool for assessing cybersecurity vacancies against a structured record of your own experience, using **CyBOK v1.1** and the **NIST NICE Framework** as the vocabulary for the comparison.
 
 The visual language rejects modern AI tropes (bright neon glows, dark glossy cards, decorative emojis) in favor of a **Premium Minimalist** gallery dashboard aesthetic characterized by precision typography, warm paper tones, thin 1px structural hairlines, and desaturated status pills.
 
@@ -54,7 +54,7 @@ The visual language rejects modern AI tropes (bright neon glows, dark glossy car
 
 ## 4. Logo & Iconography Specifications
 
-### Vector Mark (`aegis_logo.svg`)
+### Vector Mark (`cyber-posting-ledger_logo.svg`)
 The logo mark consists of a geometric shield contour layered with an internal 4-point decision grid, rendered with crisp 1.5px vector strokes in Deep Teal (`#0F5257`).
 
 ### Iconography Rules

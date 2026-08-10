@@ -3,7 +3,7 @@ CV & Cover Letter Text Coverage Analyzer for Cyber Vacancy Intelligence Tracker.
 Performs semantic keyword matching against candidate CV text to report skill coverage and missing terms.
 """
 
-from aegis_ledger.models import CVCoverageResult, VacancyRecord
+from cyber_posting_ledger.models import CVCoverageResult, VacancyRecord
 
 
 def analyze_cv_coverage(cv_text: str, vacancy: VacancyRecord) -> CVCoverageResult:

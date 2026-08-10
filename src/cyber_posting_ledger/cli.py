@@ -1,5 +1,5 @@
 """
-Command Line Interface (CLI) & Web Server for AEGIS-LEDGER (Cyber Vacancy Intelligence Tracker).
+Command Line Interface (CLI) & Web Server for Cyber Posting Ledger (Cyber Vacancy Intelligence Tracker).
 """
 
 import http.server
@@ -10,25 +10,25 @@ from pathlib import Path
 
 import click
 
-from aegis_ledger import __version__
-from aegis_ledger.analyzer import analyze_cv_coverage
-from aegis_ledger.exporter import generate_html_report
-from aegis_ledger.generator import (
+from cyber_posting_ledger import __version__
+from cyber_posting_ledger.analyzer import analyze_cv_coverage
+from cyber_posting_ledger.exporter import generate_html_report
+from cyber_posting_ledger.generator import (
     format_brief_markdown,
     generate_application_brief,
 )
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     VacancyRecord,
 )
-from aegis_ledger.scoring import evaluate_vacancy
-from aegis_ledger.storage import VacancyStorage
+from cyber_posting_ledger.scoring import evaluate_vacancy
+from cyber_posting_ledger.storage import VacancyStorage
 
 
 @click.group()
-@click.version_option(version=__version__, prog_name="aegis-ledger")
+@click.version_option(version=__version__, prog_name="cyber-posting-ledger")
 def cli():
-    """AEGIS-LEDGER CLI - Academic & Recruiter-Grounded Cybersecurity Career Intelligence Engine."""
+    """Cyber Posting Ledger CLI - Academic & Recruiter-Grounded Cybersecurity Career Intelligence Engine."""
 
 
 @cli.command("list")
@@ -41,7 +41,7 @@ def list_vacancies():
         click.echo("No vacancies currently tracked.")
         return
 
-    click.echo("\nAEGIS-LEDGER Tracked Vacancies:")
+    click.echo("\nCyber Posting Ledger Tracked Vacancies:")
     click.echo("=" * 95)
     click.echo(
         f"{'ID':<10} {'ORGANIZATION':<15} {'TITLE':<30} {'STATUS':<14} {'ELIG':<6} {'FIT':<6} {'STRAT':<6} {'PRACT':<6}"
@@ -73,7 +73,7 @@ def score_vacancy(record_id: str):
     res = evaluate_vacancy(record, profile)
 
     click.echo("\n========================================================")
-    click.echo(f" AEGIS-LEDGER FIT ASSESSMENT: {record.id} - {record.title}")
+    click.echo(f" Cyber Posting Ledger FIT ASSESSMENT: {record.id} - {record.title}")
     click.echo(f" Candidate: {profile.candidate_name} ({', '.join(profile.nationalities)})")
     click.echo(f" Organization: {record.organization} ({record.grade_or_level})")
     click.echo("========================================================")
@@ -176,14 +176,14 @@ def export_html_cmd(record_id: str, out_file: str):
 @cli.command("serve")
 @click.option("--port", default=8000, help="Port to run local web server on")
 def serve_dashboard(port: int):
-    """Serve AEGIS-LEDGER Dashboard UI."""
+    """Serve Cyber Posting Ledger Dashboard UI."""
     # The dashboard assets ship inside the package, so this works from an
     # installed copy and not only from a source checkout.
     frontend_dir = Path(__file__).parent / "frontend"
     if not frontend_dir.exists():
         click.echo(
             "Error: dashboard files are missing from the installation. "
-            "Reinstall with 'pip install --force-reinstall aegis-ledger'.",
+            "Reinstall with 'pip install --force-reinstall cyber-posting-ledger'.",
             err=True,
         )
         sys.exit(1)
@@ -285,7 +285,7 @@ def serve_dashboard(port: int):
             self.end_headers()
             self.wfile.write(json.dumps(data, default=str).encode("utf-8"))
 
-    click.echo(f"Serving AEGIS-LEDGER Dashboard at http://localhost:{port} ...")
+    click.echo(f"Serving Cyber Posting Ledger Dashboard at http://localhost:{port} ...")
     try:
         with socketserver.TCPServer(("", port), DashboardHandler) as httpd:
             httpd.serve_forever()

@@ -1,5 +1,5 @@
 /**
- * AEGIS-LEDGER Dashboard, Radar Chart, Brief Generator, CV Analyzer & Recruiter Advisor Logic
+ * Cyber Posting Ledger Dashboard, Radar Chart, Brief Generator, CV Analyzer & Recruiter Advisor Logic
  */
 
 let allVacancies = [];

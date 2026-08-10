@@ -1,16 +1,16 @@
 """
-Application Alignment Brief Generator for AEGIS-LEDGER.
+Application Alignment Brief Generator for Cyber Posting Ledger.
 Generates tailored cover letter & CV briefs based on multi-dimensional fit analysis and recruiter advisor insights.
 """
 
 from datetime import datetime, timezone
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     ApplicationBrief,
     CandidateProfile,
     VacancyRecord,
 )
-from aegis_ledger.scoring import classify_cybok_taxonomy, evaluate_vacancy
+from cyber_posting_ledger.scoring import classify_cybok_taxonomy, evaluate_vacancy
 
 
 def generate_application_brief(
@@ -148,7 +148,7 @@ def format_brief_markdown(brief: ApplicationBrief) -> str:
     lines.extend(
         [
             "---",
-            "*AEGIS-LEDGER &bull; Confidential Personal Career Intelligence*",
+            "*Cyber Posting Ledger &bull; Confidential Personal Career Intelligence*",
         ]
     )
     return "\n".join(lines)

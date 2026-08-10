@@ -3,7 +3,7 @@ Recruiter Intelligence & Career Path Upgrade Advisory Engine.
 Provides recruiter-aligned certification roadmaps, quantifiable achievement templates, and score booster steps.
 """
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     CertificationItem,
     CertificationRoadmap,
@@ -99,7 +99,7 @@ CERT_DATABASE = {
 
 def generate_recruiter_advice(vacancy: VacancyRecord, profile: CandidateProfile) -> RecruiterAdvice:
     """Generates recruiter-aligned certification roadmap, impact metrics, and score booster steps."""
-    from aegis_ledger.scoring import classify_cybok_taxonomy
+    from cyber_posting_ledger.scoring import classify_cybok_taxonomy
 
     cybok = classify_cybok_taxonomy(vacancy)
     cat = cybok.primary_category

@@ -2,13 +2,13 @@
 Unit tests for Recruiter Advisor Engine.
 """
 
-from aegis_ledger.models import (
+from cyber_posting_ledger.models import (
     CandidateProfile,
     ProvenanceMetadata,
     SubstantiveRequirements,
     VacancyRecord,
 )
-from aegis_ledger.recruiter_advisor import generate_recruiter_advice
+from cyber_posting_ledger.recruiter_advisor import generate_recruiter_advice
 
 
 def test_generate_recruiter_advice_grc():

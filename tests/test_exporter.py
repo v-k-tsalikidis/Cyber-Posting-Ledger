@@ -2,8 +2,8 @@
 Unit tests for HTML report exporter.
 """
 
-from aegis_ledger.exporter import generate_html_report
-from aegis_ledger.models import (
+from cyber_posting_ledger.exporter import generate_html_report
+from cyber_posting_ledger.models import (
     CandidateProfile,
     PracticalMetrics,
     ProvenanceMetadata,

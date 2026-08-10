@@ -2,8 +2,8 @@
 Unit tests for CV text coverage analyzer.
 """
 
-from aegis_ledger.analyzer import analyze_cv_coverage
-from aegis_ledger.models import (
+from cyber_posting_ledger.analyzer import analyze_cv_coverage
+from cyber_posting_ledger.models import (
     EligibilityCriteria,
     ProvenanceMetadata,
     SubstantiveRequirements,
