@@ -1,5 +1,5 @@
 """
-Local JSON storage repository, candidate profile persistence, and seed data provider for Cyber Vacancy Intelligence Tracker.
+Local JSON storage repository, candidate profile persistence, and seed data provider for Cyber Posting Ledger.
 """
 
 import json
@@ -257,7 +257,7 @@ class VacancyStorage:
     def export_markdown(self) -> str:
         records = self.load_all()
         lines = [
-            "# Vacancy Intelligence Ledger - Summary Report",
+            "# Cyber Posting Ledger - Summary Report",
             f"*Generated on {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')}*",
             "",
             "| ID | Organization | Job Title | Grade | Status | Formal Score | Substantive | Strategic | Practical | Official Source |",

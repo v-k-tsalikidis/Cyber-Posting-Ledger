@@ -1,6 +1,6 @@
 # Cyber Posting Ledger Brand Style Guide & Design System
 
-*Cyber Posting Ledger Vacancy Intelligence Ledger — Academic & Recruiter-Grounded Cybersecurity Career Intelligence*
+*Cyber Posting Ledger — Academic & Recruiter-Grounded Cybersecurity Career Intelligence*
 
 ---
 

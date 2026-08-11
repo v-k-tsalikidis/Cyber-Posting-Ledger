@@ -1,5 +1,5 @@
 """
-Data models and schemas for Cyber Vacancy Intelligence Tracker.
+Data models and schemas for Cyber Posting Ledger.
 """
 
 from datetime import date, datetime

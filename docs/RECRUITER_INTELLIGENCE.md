@@ -1,6 +1,6 @@
 # Recruiter Intelligence & Career Path Advisory Engine
 
-The **Cyber Vacancy Intelligence Tracker** includes a specialized **Recruiter Intelligence & Career Path Advisory Engine**, translating cybersecurity recruiter search behavior, certification requirements, and quantifiable impact metrics into automated, actionable candidate career advice.
+**Cyber Posting Ledger** includes a specialized **Recruiter Intelligence & Career Path Advisory Engine**, translating cybersecurity recruiter search behavior, certification requirements, and quantifiable impact metrics into automated, actionable candidate career advice.
 
 ---
 
@@ -8,7 +8,7 @@ The **Cyber Vacancy Intelligence Tracker** includes a specialized **Recruiter In
 
 Cybersecurity recruiters filter CVs for specific evidence rather than generic task lists:
 
-| Recruiter Focus Area | How Vacancy Intelligence Tracker Evaluates & Advises |
+| Recruiter Focus Area | How Cyber Posting Ledger Evaluates & Advises |
 | :--- | :--- |
 | **Hard Tech Stacks & Tools** | Scans for specific tool proficiencies (e.g. *Splunk, Wireshark, CrowdStrike, Python, Linux, Neo4j*) mapped to CyBOK Knowledge Areas. |
 | **Industry Certifications** | Maps candidate certifications held against domain-specific must-have credentials (e.g., *CISSP, CISA, CISM, GCTI, Security+, ISO 27001 LA*). |

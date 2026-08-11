@@ -1,5 +1,5 @@
 """
-Cyber Vacancy Intelligence Tracker (Vacancy Intelligence Ledger)
+Cyber Posting Ledger
 Local-first cybersecurity vacancy & career intelligence evaluation engine.
 """
 

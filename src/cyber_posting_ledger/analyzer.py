@@ -1,5 +1,5 @@
 """
-CV & Cover Letter Text Coverage Analyzer for Cyber Vacancy Intelligence Tracker.
+CV & Cover Letter Text Coverage Analyzer for Cyber Posting Ledger.
 Performs semantic keyword matching against candidate CV text to report skill coverage and missing terms.
 """
 

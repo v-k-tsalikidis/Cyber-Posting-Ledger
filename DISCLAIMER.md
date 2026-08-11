@@ -2,7 +2,7 @@
 
 ## Unofficial & Independent Status
 
-**Cyber Vacancy Intelligence Tracker** (and its public identity **Vacancy Intelligence Ledger**) is an independent, open-source security engineering & career intelligence tool authored by Vasileios Tsalikidis.
+**Cyber Posting Ledger** is an independent, open-source security engineering & career intelligence tool authored by Vasileios Tsalikidis.
 
 - **No Official Affiliation:** This project is not affiliated with, endorsed by, sponsored by, or officially associated with NATO, the NATO Communications and Information Agency (NCIA), the European Union, ENISA, CERT-EU, eu-LISA, Europol, the Hellenic Armed Forces, or any government agency or international organization.
 - **Public & Synthetic Data Only:** The default seed data, sample vacancy records, and organization benchmarks included in this repository are derived exclusively from publicly accessible vacancy notices, public job descriptions, or synthetic demo fixtures. No non-public, confidential, or proprietary internal data is contained within or processed by this tool.

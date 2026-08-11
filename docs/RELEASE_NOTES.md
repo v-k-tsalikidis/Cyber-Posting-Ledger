@@ -1,6 +1,6 @@
 # Release Notes & Version History - Cyber Posting Ledger
 
-This document maintains the version history, feature additions, and release documentation for **Cyber Posting Ledger** (*Cyber Posting Ledger Vacancy Intelligence Ledger*).
+This document maintains the version history, feature additions, and release documentation for **Cyber Posting Ledger**.
 
 ---
 

@@ -1,5 +1,5 @@
 """
-Command Line Interface (CLI) & Web Server for Cyber Posting Ledger (Cyber Vacancy Intelligence Tracker).
+Command Line Interface (CLI) & Web Server for Cyber Posting Ledger.
 """
 
 import http.server

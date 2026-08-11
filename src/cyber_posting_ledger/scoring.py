@@ -1,5 +1,5 @@
 """
-Multi-dimensional evaluation engine, CyBOK taxonomy classifier, and PPP calculator for Cyber Vacancy Intelligence Tracker.
+Multi-dimensional evaluation engine, CyBOK taxonomy classifier, and PPP calculator for Cyber Posting Ledger.
 """
 
 from cyber_posting_ledger.models import (
