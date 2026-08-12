@@ -176,7 +176,161 @@ def get_default_seed_records() -> list[VacancyRecord]:
         ],
     )
 
-    return [vac1, vac2, vac3]
+    # Three postings the candidate does not fit. A tracker whose demo shows
+    # every role as a perfect match demonstrates nothing: the first question
+    # a reader asks is when it says no, and there has to be an answer. The
+    # gaps below are real ones in the profile — no cloud engineering, no
+    # offensive security, and a nationality that cannot hold a US clearance.
+    #
+    # These employers are invented, and their URLs point at example.com, so
+    # nothing here can be mistaken for a real advertisement.
+
+    vac4 = VacancyRecord(
+        id="VAC-004",
+        title="Cloud Security Architect",
+        organization="Northwind Cloud Services (fictional)",
+        grade_or_level="Senior",
+        eligibility=EligibilityCriteria(
+            allowed_nationalities=["EU"],
+            min_degree_level="Bachelor",
+            min_experience_years=10,
+            security_clearance_required="None",
+            required_languages=["English"],
+        ),
+        requirements=SubstantiveRequirements(
+            domains=["Cloud Security", "DevSecOps", "Application Security"],
+            frameworks=["CIS Benchmarks", "CSA CCM"],
+            technologies=["AWS", "Azure", "Kubernetes", "Terraform"],
+            nato_eu_context=False,
+        ),
+        strategic=StrategicMetrics(
+            org_tier=OrgTier.TIER_3,
+            brand_value_score=45,
+            stepping_stone_score=40,
+            ecosystem_alignment=False,
+        ),
+        practical=PracticalMetrics(
+            estimated_monthly_net_eur=6200.0,
+            location="Amsterdam, Netherlands",
+            country="Netherlands",
+            contract_type="Permanent",
+            remote_policy="On-site",
+        ),
+        provenance=ProvenanceMetadata(
+            source_url="https://example.com/fictional/cloud-security-architect",
+            is_official_source=False,
+            verified_at=today,
+            deadline=date(2026, 10, 1),
+            created_at=now,
+        ),
+        milestones=[
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Synthetic record. Kept as a demonstration of a poor substantive fit: "
+                "no cloud engineering history and none of the platform certifications asked for.",
+            ),
+        ],
+    )
+
+    vac5 = VacancyRecord(
+        id="VAC-005",
+        title="Senior Red Team Operator",
+        organization="Halberd Offensive Security (fictional)",
+        grade_or_level="Senior",
+        eligibility=EligibilityCriteria(
+            allowed_nationalities=["EU"],
+            min_degree_level="Bachelor",
+            min_experience_years=6,
+            security_clearance_required="None",
+            required_languages=["English"],
+        ),
+        requirements=SubstantiveRequirements(
+            domains=["Penetration Testing", "Red Teaming", "Exploit Development"],
+            frameworks=["OSSTMM", "PTES"],
+            technologies=["C", "Assembly", "Cobalt Strike", "Burp Suite"],
+            nato_eu_context=False,
+        ),
+        strategic=StrategicMetrics(
+            org_tier=OrgTier.TIER_3,
+            brand_value_score=50,
+            stepping_stone_score=35,
+            ecosystem_alignment=False,
+        ),
+        practical=PracticalMetrics(
+            estimated_monthly_net_eur=5400.0,
+            location="Berlin, Germany",
+            country="Germany",
+            contract_type="Permanent",
+            remote_policy="Hybrid",
+        ),
+        provenance=ProvenanceMetadata(
+            source_url="https://example.com/fictional/senior-red-team-operator",
+            is_official_source=False,
+            verified_at=today,
+            deadline=date(2026, 9, 30),
+            created_at=now,
+        ),
+        milestones=[
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Synthetic record. Defensive and governance experience does not transfer "
+                "to an offensive role, and the tool should not pretend otherwise.",
+            ),
+        ],
+    )
+
+    vac6 = VacancyRecord(
+        id="VAC-006",
+        title="Cyber Operations Officer",
+        organization="Ridgeline Defense Systems (fictional)",
+        grade_or_level="GS-13 equivalent",
+        eligibility=EligibilityCriteria(
+            allowed_nationalities=["US"],
+            min_degree_level="Bachelor",
+            min_experience_years=5,
+            security_clearance_required="US TOP SECRET / SCI",
+            required_languages=["English"],
+        ),
+        requirements=SubstantiveRequirements(
+            domains=["SOC", "Incident Response", "CTI"],
+            frameworks=["NIST CSF", "MITRE ATT&CK"],
+            technologies=["Splunk", "Python"],
+            nato_eu_context=False,
+        ),
+        strategic=StrategicMetrics(
+            org_tier=OrgTier.TIER_3,
+            brand_value_score=55,
+            stepping_stone_score=30,
+            ecosystem_alignment=False,
+        ),
+        practical=PracticalMetrics(
+            estimated_monthly_net_eur=7000.0,
+            location="Virginia, United States",
+            country="United States",
+            contract_type="Permanent",
+            remote_policy="On-site",
+        ),
+        provenance=ProvenanceMetadata(
+            source_url="https://example.com/fictional/cyber-operations-officer",
+            is_official_source=False,
+            verified_at=today,
+            deadline=date(2026, 11, 15),
+            created_at=now,
+        ),
+        milestones=[
+            Milestone(
+                status=MilestoneStatus.IDENTIFIED,
+                timestamp=now,
+                notes="Synthetic record. The work itself is a close match; US citizenship and a "
+                "US clearance are not obtainable, so the role is closed regardless of fit. "
+                "Eligibility and fit are separate questions and this record keeps them apart.",
+            ),
+        ],
+    )
+
+    return [vac1, vac2, vac3, vac4, vac5, vac6]
 
 
 class VacancyStorage:
